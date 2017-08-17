@@ -5,7 +5,6 @@
         <!--<img src="../assets/weatherIcons/" class="image">-->
         <div style="padding: 8px;">
           <div class="bottom clearfix">
-              <p style="margin: 5px 0;">{{dayCN[index]}}</p>
               <img width="30" :src="getIcons(item.code_day)"> ~
               <img width="30" :src="getIcons(item.code_night)">
               <span>{{item.low}} ~ {{ item.high }}</span>

@@ -1,16 +1,22 @@
 <template>
   <div>
-    <h1>{{msg}}</h1>
-    <Weather></Weather>
+    <!--<Weather></Weather>-->
+    <InputFrame></InputFrame>
+    <hr>
+    <SList></SList>
   </div>
 </template>
 
 <script>
-  import Weather from './Weather'
+//  import Weather from './Weather'
+  import InputFrame from './Inputer'
+  import SList from './SList'
   export default {
     name: 'Shuoshuo',
     components: {
-      Weather
+//      Weather,
+      InputFrame,
+      SList
     },
     data () {
       return {
@@ -20,10 +26,6 @@
   }
 </script>
 <style scoped>
-  div {
-    border: 1px solid #999;
-    border-radius: 4px;
-  }
   h1, h2 {
     font-weight: normal;
   }
