@@ -82,11 +82,6 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
-// let httpServer = http.createServer(app)
-// let httpsServer = https.createServer(credentials, app);
-
 spdyOption = {
   key: credentials.key,
   cert: credentials.chain,
@@ -105,19 +100,6 @@ spdyOption = {
 }
 
 app.use(routers)
-
-// spdy
-//   .createServer(spdyOption, app)
-//   .listen(ports.secure, (error) => {
-//     if (error) {
-//       console.error(error)
-//       return process.exit(1)
-//     }
-//   })
-
-// httpServer.listen(ports['non-secure'])
-// httpsServer.listen(ports.secure);
-// console.log('server on https://localhost:' + ports.secure)
 
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)

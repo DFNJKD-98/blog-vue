@@ -57,6 +57,7 @@
 </template>
 
 <script>
+  // todo cookie max-age
 
   import Conclusion from './components/Conclusion'
   import axios from 'axios'
@@ -96,7 +97,6 @@
           axios.post('/login', {...this.form})
             .then(function (response) {
               if (response.data === 'succeed') {
-                // todo reload shuoshuo list
                 self.showLoginFrame = false
                 self.isLogin = true
                 self.needReload = true
@@ -120,7 +120,6 @@
             if (res.data === 'succeed') {
               self.isLogin = false
               self.needReload = true
-              // todo reload shuoshuo list
             } else {
               console.error('logout failed: ', res)
             }
