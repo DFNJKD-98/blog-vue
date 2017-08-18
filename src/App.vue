@@ -27,8 +27,8 @@
           <el-col :sm="24" :md="7" :lg="6">
             <Conclusion></Conclusion>
           </el-col>
-          <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999">
-            <router-view></router-view>
+          <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
+            <router-view :isLogin="isLogin" :needReload = needReload></router-view>
           </el-col>
         </el-row>
       </el-col>
@@ -61,6 +61,8 @@
   import Conclusion from './components/Conclusion'
   import axios from 'axios'
 
+  axios.defaults.withCredentials = true
+
   export default {
     name: 'app',
     components: {
@@ -73,6 +75,7 @@
         alertContent: '',
         indexActive: '/',
         showLoginFrame: false,
+        needReload: false,
         mark: 'all',
         form: {
           username: '',
@@ -83,19 +86,21 @@
       }
     },
     mounted () {
-      this.isLogin = document.cookie.indexOf('login=bingo')
+      this.isLogin =  document.cookie.indexOf('login=bingo') > -1
     },
     methods: {
       login () {
         let self = this
         this.showLoginFrame = true
         if (this.form.username.trim() && this.form.password) {
-          axios.post(process.env.APIUrlPrefix + '/getUser', {...this.form})
+          axios.post('/login', {...this.form})
             .then(function (response) {
               if (response.data === 'succeed') {
                 // todo reload shuoshuo list
                 self.showLoginFrame = false
                 self.isLogin = true
+                self.needReload = true
+                console.log(response.headers["set-cookie"])
               }
             })
             .catch(function (error) {
@@ -110,10 +115,11 @@
       },
       logOut () {
         let self = this
-        axios.post('https://localhost:9981/logout')
+        axios.post('/logout')
           .then(res => {
             if (res.data === 'succeed') {
               self.isLogin = false
+              self.needReload = true
               // todo reload shuoshuo list
             } else {
               console.error('logout failed: ', res)

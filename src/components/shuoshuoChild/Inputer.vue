@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import ImgCompress from './ImgCompress.js'
+  import ImgCompress from '../ImgCompress.js'
 
   /*
   * todo: 美化列表
@@ -143,15 +143,14 @@
   }
 
   #editor:empty:before {
-    line-height: 48px;
     content: attr(placeholder);
     display: block;
     color: #999
   }
 
-  #editor:focus:before{
-    content: '';
-  }
+  /*#editor:focus:before{*/
+    /*content: '';*/
+  /*}*/
 
   #editor::-webkit-scrollbar-track
   {
