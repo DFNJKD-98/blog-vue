@@ -21,18 +21,7 @@
     </div>
     <br>
 
-    <el-row>
-      <el-col :push="2" :sm="20" :md="20" :lg="20">
-        <el-row :gutter="10">
-          <el-col :sm="24" :md="7" :lg="6">
-            <Conclusion></Conclusion>
-          </el-col>
-          <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
-            <router-view :isLogin="isLogin" :needReload = needReload></router-view>
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
+    <router-view :isLogin="isLogin" :needReload = needReload></router-view>
 
     <el-dialog title="Login" :visible.sync="showLoginFrame">
       <el-form :model="form">
@@ -57,17 +46,12 @@
 </template>
 
 <script>
-
-  import Conclusion from './components/Conclusion'
   import axios from 'axios'
 
   axios.defaults.withCredentials = true
 
   export default {
     name: 'app',
-    components: {
-      Conclusion
-    },
     data () {
       return {
         isLogin: false,

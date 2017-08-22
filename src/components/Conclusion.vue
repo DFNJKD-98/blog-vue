@@ -2,8 +2,9 @@
 
   <div>
     <h2>Summary</h2>
-    <el-menu default-active="all" class="el-menu-vertical-demo">
-      <el-menu-item :key="item.year" :index="item.year" v-for="item in summaryData">
+    <div v-show="errorText">{{errorText}}</div>
+    <el-menu v-show="!errorText" :default-active=defaultFilter class="el-menu-vertical-demo">
+      <el-menu-item :key="item.year" :index="item.year" v-for="item in summaryData" @click="filter(item.year)">
         {{item.year}} <el-tag typeof="primary">{{item.count}}</el-tag>
       </el-menu-item>
     </el-menu>
@@ -13,18 +14,29 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: 'Conclusion',
-    data () {
-      return {
-        summaryDataFromDb: [{'name': 'summary', 'summary': {'2017': 50, 'all': 153, '2016': 70, '2015': 33}}]
-      }
+    props: {
+      defaultFilter: {
+        type: String,
+        require: true
+      },
+      filter: {
+        type: Function,
+        require: true,
+      },
+      summary: {
+        type: Object,
+        require: true,
+      },
+      errorText: String
     },
     computed: {
       summaryData: function () {
-        return Object.keys(this.summaryDataFromDb[0].summary).sort().reverse().map(k => ({
+        return Object.keys(this.summary).sort().reverse().map(k => ({
           year: k,
-          count: this.summaryDataFromDb[0].summary[k]
+          count: this.summary[k]
         }))
       }
     }
@@ -33,9 +45,11 @@
 <style scoped>
   h2 {
     text-align: center;
+    border-bottom: 1px solid #999;
+    margin: 0;
+    padding: 20px 0;
   }
   div {
-    /*background-color: #75a89d;*/
     border: 1px solid rgba(58, 58, 58, 0.33);
     border-radius: 6px;
     box-shadow: 0 1px 2px 0 rgba(34,36,38,.15)
