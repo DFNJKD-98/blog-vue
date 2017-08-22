@@ -8,8 +8,8 @@
             <el-menu-item index="/"><i class="el-icon-menu"></i>Index</el-menu-item>
             <el-menu-item index="/shuoshuo">Shuoshuo</el-menu-item>
             <el-menu-item index="/blog">Blog</el-menu-item>
-            <el-menu-item index="/Hello">Hello</el-menu-item>
             <el-menu-item index="/projects">Projects</el-menu-item>
+            <el-menu-item index="/Hello">Hello</el-menu-item>
             <li id="login" class="el-menu-item">
               <el-button type="success" v-if="!isLogin" @click="showLoginFrame = true">Login</el-button>
               <el-button v-if="isLogin" @click="logOut()">LogOut</el-button>
@@ -21,7 +21,11 @@
     </div>
     <br>
 
+    <el-row>
+      <el-col :push="2" :sm="20" :md="20" :lg="20">
     <router-view :isLogin="isLogin" :needReload = needReload></router-view>
+      </el-col>
+    </el-row>
 
     <el-dialog title="Login" :visible.sync="showLoginFrame">
       <el-form :model="form">
@@ -57,7 +61,7 @@
         isLogin: false,
         logFailed: false,
         alertContent: '',
-        indexActive: '/',
+        indexActive: this.$route.path,
         showLoginFrame: false,
         needReload: false,
         mark: 'all',
@@ -70,6 +74,10 @@
       }
     },
     mounted () {
+      this.$router.beforeEach((to, from, next) => {
+        this.indexActive = to.path
+        next()
+      })
       this.isLogin =  document.cookie.indexOf('login=bingo') > -1
     },
     methods: {

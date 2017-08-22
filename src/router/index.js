@@ -4,7 +4,6 @@ import Hello from '@/components/Hello'
 import Index from '@/components/Index'
 import Shuoshuo from '@/components/Shuoshuo'
 import Blog from '@/components/Blog'
-import Conclusion from '@/components/Conclusion'
 import Projects from '@/components/Projects'
 
 Vue.use(Router)
@@ -31,11 +30,6 @@ export default new Router({
       path: '/Blog',
       name: 'Blog',
       component: Blog
-    },
-    {
-      path: '/s',
-      name: 'Conclusion',
-      component: Conclusion
     },
     {
       path: '/Projects',
