@@ -34,14 +34,6 @@
 <script>
   import ImgCompress from '../ImgCompress.js'
 
-  /*
-  * todo: 美化列表
-  * todo 加载列表
-  * todo 接收一个从app传进来的参数重新加载整个列表
-  * todo summary 只在shuoshuo和blog显示，也做成一个模块吧。如果把天气信息放到这个模块里面，就要借助app进行跨组件通讯
-  *
-  * */
-
   export default {
     name: 'InputFrame',
     components: {

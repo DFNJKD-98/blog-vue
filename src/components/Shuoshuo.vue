@@ -6,7 +6,8 @@
     <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
       <InputFrame v-show="isLogin"></InputFrame>
       <hr v-show="isLogin">
-      <div>
+      <p v-show="shuoshuoError">{{shuoshuoError}}</p>
+      <div v-show="!shuoshuoError">
         <ListItem :needReload="needReload" :key="item.date" v-for="item in shuoshuoList" :isLogin="isLogin" :item="item"></ListItem>
       </div>
     </el-col>

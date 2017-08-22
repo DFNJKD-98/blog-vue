@@ -1,13 +1,16 @@
 <template>
 
-  <div>
+  <div id="wrapper">
     <h2>Summary</h2>
     <div v-show="errorText">{{errorText}}</div>
-    <el-menu v-show="!errorText" :default-active=defaultFilter class="el-menu-vertical-demo">
+    <el-menu v-show="!errorText" :default-active=defaultFilter class="el-menu-vertical-demo" style="border: solid #999; border-width: 1px 0; margin-bottom: 20px;">
       <el-menu-item :key="item.year" :index="item.year" v-for="item in summaryData" @click="filter(item.year)">
-        {{item.year}} <el-tag typeof="primary">{{item.count}}</el-tag>
+        {{item.year}}
+        <el-tag typeof="primary">{{item.count}}</el-tag>
       </el-menu-item>
     </el-menu>
+
+    <Weather></Weather>
   </div>
 
 
@@ -15,8 +18,13 @@
 
 <script>
   import axios from 'axios'
+  import Weather from './Weather'
+
   export default {
     name: 'Conclusion',
+    components: {
+      Weather
+    },
     props: {
       defaultFilter: {
         type: String,
@@ -45,31 +53,34 @@
 <style scoped>
   h2 {
     text-align: center;
-    border-bottom: 1px solid #999;
-    margin: 0;
-    padding: 20px 0;
   }
-  div {
+
+  #wrapper {
     border: 1px solid rgba(58, 58, 58, 0.33);
     border-radius: 6px;
-    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15)
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15)
   }
+
   .el-tag {
     position: absolute;
     right: 20px;
     top: 6px;
   }
+
   .el-menu {
     background-color: transparent;
   }
-  .el-menu-item{
+
+  .el-menu-item {
     position: relative;
     border-bottom: 1px solid #999;
-    line-height:36px;
+    line-height: 36px;
   }
-  .el-menu-item:nth-last-of-type(1){
+
+  .el-menu-item:nth-last-of-type(1) {
     border-bottom-color: transparent;
   }
+
   .is-active {
     color: #fff;
     background-color: #81ae9e;
