@@ -1,16 +1,17 @@
 <template>
   <div>
-    <!--<Weather></Weather>-->
     <InputFrame v-show="isLogin"></InputFrame>
     <hr v-show="isLogin">
-    <SList :isLogin="isLogin" :needReload="needReload"></SList>
+    <div>
+      <ListItem :needReload="needReload" :key="item.date" v-for="item in shuoshuoList" :isLogin="isLogin" :item="item"></ListItem>
+    </div>
   </div>
 </template>
 
 <script>
-  //  import Weather from './Weather'
+  import axios from 'axios'
   import InputFrame from './shuoshuoChild/Inputer'
-  import SList from './shuoshuoChild/SList'
+  import ListItem from './shuoshuoChild/ListItem'
 
   export default {
     name: 'Shuoshuo',
@@ -29,17 +30,42 @@
     components: {
 //      Weather,
       InputFrame,
-      SList
+      ListItem
     },
     data () {
       return {
-        msg: 'This is Shuoshuo'
+        shuoshuoList: [],
+      }
+    },
+    mounted () {
+      axios.get('/getShuoshuoList', {
+        params: {
+          limit: 20,
+          filter: this.filter,
+          timeMark: this.timeMark
+        }
+      }).then(res => {
+        this.shuoshuoList = res.data
+//        console.log(res)
+      }).catch(e => console.error(e))
+    },
+    watch: {
+      needReload () {
+        axios.get('/getShuoshuoList', {
+          params: {
+            limit: 20,
+            filter: this.filter,
+            timeMark: this.timeMark
+          }
+        }).then(res => {
+          this.shuoshuoList = res.data
+        }).catch(e => console.error(e))
       }
     }
   }
 </script>
-<style scoped>
-  h1, h2 {
-    font-weight: normal;
+<style>
+  .el-card__body {
+    padding: 0;
   }
 </style>

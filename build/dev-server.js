@@ -12,20 +12,6 @@ var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
 
 const express = require('express')
-const compression = require('compression')
-const http = require('http')
-const https = require('https')
-const spdy = require('spdy')
-// this is just add a default format to moment, because this file always load first
-const moment = require('moment')
-const cookieParser = require('cookie-parser')
-
-moment.defaultFormat = 'YYYY-MM-DD HH:mm:ss'
-
-const credentials = require('./env').credentials
-// const ports = require('./env').ports
-
-const routers = require('./backEnd/routers/routers')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -74,38 +60,11 @@ app.use(devMiddleware)
 // compilation error display
 app.use(hotMiddleware)
 
-let bodyParser = require('body-parser')
-
-
-app.use(compression())
-app.use(cookieParser())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
-
-spdyOption = {
-  key: credentials.key,
-  cert: credentials.chain,
-  // cert: credentials.cert,
-  spdy: {
-    protocols: ['h2', 'spdy/3.1', 'http/1.1'],
-    plain: false,
-    'x-forwarded-for': true,
-    connection: {
-      windowSize: 1024 * 1024, // Server's window size
-
-      // **optional** if true - server will send 3.1 frames on 3.0 *plain* spdy
-      autoSpdy31: false
-    }
-  }
-}
-
-app.use(routers)
-
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-var uri = 'https://localhost:' + port
+var uri = 'http://test.com:' + port
 
 var _resolve
 var readyPromise = new Promise(resolve => {
@@ -122,7 +81,7 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
-var server = spdy.createServer(spdyOption, app).listen(port)
+var server = app.listen(port)
 
 module.exports = {
   ready: readyPromise,

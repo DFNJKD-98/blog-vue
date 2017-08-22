@@ -5,8 +5,9 @@
       <i class="el-icon-picture" id="img-selector" @click="selectFile()"></i>
       <el-button type="primary" id="submit" :disabled="disableBtn" @click="postShuoshuo()">发表</el-button>
     </div>
+
     <el-row style="padding: 5px;">
-      <el-upload action="http://localhost:9100/fun"
+      <el-upload action=""
                  :auto-upload="false"
                  ref="uploader"
                  :on-remove="handleRemove"
@@ -21,9 +22,11 @@
       </el-upload>
     </el-row>
 
+    <!--预览-->
     <el-dialog v-model="dialogVisible" size="full">
       <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
+
 
   </div>
 </template>

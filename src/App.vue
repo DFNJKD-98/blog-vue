@@ -42,8 +42,8 @@
         <el-form-item label="Password" :label-width="formLabelWidth" required>
           <el-input v-model="form.password" type="password" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="RememberMe" :label-width="formLabelWidth" prop="remember">
-          <el-checkbox label="" v-model="form.remember" name="remember"></el-checkbox>
+        <el-form-item label="RememberMe" :label-width="formLabelWidth" prop="rememberMe">
+          <el-checkbox label="" v-model="form.rememberMe" name="rememberMe"></el-checkbox>
         </el-form-item>
       </el-form>
       <el-alert v-show="logFailed" title="Invalid username or Password." :closable="false" type="error"></el-alert>
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-  // todo cookie max-age
 
   import Conclusion from './components/Conclusion'
   import axios from 'axios'
@@ -79,9 +78,9 @@
         needReload: false,
         mark: 'all',
         form: {
-          username: '',
-          password: '',
-          remember: false
+          username: 'test',
+          password: 'test',
+          rememberMe: true
         },
         formLabelWidth: '120px'
       }
@@ -100,7 +99,6 @@
                 self.showLoginFrame = false
                 self.isLogin = true
                 self.needReload = true
-                console.log(response.headers["set-cookie"])
               }
             })
             .catch(function (error) {
