@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="container">
-      <div id="editor" contenteditable placeholder="hiahiahia~~" @input="bindShuoshuo($event)"></div>
+      <div id="editor" v-text="shuoshuoText" contenteditable placeholder="hiahiahia~~" @input="bindShuoshuo"></div>
       <i class="el-icon-picture" id="img-selector" @click="selectFile()"></i>
       <el-button type="primary" id="submit" :disabled="disableBtn" @click="postShuoshuo()">发表</el-button>
     </div>
@@ -13,7 +13,6 @@
                  :on-remove="handleRemove"
                  :on-preview="handlePictureCardPreview"
                  :on-change="handleChange"
-                 :on-success="handleSuccess"
                  :file-list="fileList"
                  list-type="picture-card"
                  multiple
@@ -33,27 +32,32 @@
 
 <script>
   import ImgCompress from '../ImgCompress.js'
+  import bus from '../common/EventBus'
+  import axios from 'axios'
 
   export default {
     name: 'InputFrame',
-    components: {
-      ImgCompress
-    },
     data () {
       return {
         shuoshuoText: '',
         fileList: [],
         dialogImageUrl: '',
+        todayWeather: {},
         dialogVisible: false,
-        imgFormData: new FormData()
+        errorText: ''
       }
+    },
+    mounted () {
+      let self = this
+      bus.$on('todayWeather', data => {
+        self.todayWeather = data
+      })
     },
     methods: {
       handleRemove (file) {
         console.log(file)
       },
       handleChange (file, fileList) {
-        console.log(file)
         this.fileList = fileList
       },
       handlePictureCardPreview (file) {
@@ -64,31 +68,36 @@
         document.querySelector('input[type="file"]').click()
       },
       postShuoshuo () {
+        let self = this
         const shuoshuo = {
-          content: this.shuoshuoText,
-          weather: {
-//            temperature: [weatherInfo.low, weatherInfo.high],
-//            code: [weatherInfo.code_day, weatherInfo.code_night],
-//            location: weatherInfo.location
-          },
-
+          content: self.shuoshuoText,
+          weather: self.todayWeather,
         }
-        let form = this.imgFormData
-        this.fileList.forEach(function (file) {
-          ImgCompress.compresser(file.raw, function (b) {
+        let form = new FormData()
+        this.fileList.forEach(function (file, i) {
+          ImgCompress(file.raw, function (b) {
             form.append('photo', b, file.name)
+            if (i === self.fileList.length - 1) {
+              form.append('obj', JSON.stringify(shuoshuo))
+              console.log(form.get('obj'))
+              console.log(form.get('photo'))
+              // todo  picture test
+
+              axios.post('./postShuoshuo', form)
+                .then(() => {
+                  self.$message.success('Post Shuoshuo Succeed')
+                  self.shuoshuoText = ''
+                  self.fileList = []
+                  bus.$emit('reloadShuoshuo')
+                })
+                .catch(e => {
+                  self.$message.error(e.toString())
+                })
+            }
           })
+
         })
-        this.imgFormData.append('obj', JSON.stringify(shuoshuo))
-        console.log(this.shuoshuoText)
-        console.log(this.fileList)
-        console.log(this.imgFormData)
-//        this.$refs.uploader.submit()
-      },
-      handleSuccess (response, file, fileList) {
-        if (response) {
-          console.log(response)
-        }
+
       },
       bindShuoshuo (e) {
         this.shuoshuoText = e.target.innerHTML
@@ -98,7 +107,21 @@
       disableBtn () {
         return !this.shuoshuoText.trim()
       }
-    }
+    },
+//    directives: {
+//      divmodel: {
+//        bind (el, binding, vnode) {
+//          el.innerHTML = binding.value
+//        },
+//        update (newValue, oldValue) {
+//          console.log(newValue, oldValue)
+////          console.log(el, binding, vnode)
+//        },
+//        unbind () {
+//
+//        }
+//      }
+//    }
   }
 </script>
 
@@ -144,32 +167,30 @@
   }
 
   /*#editor:focus:before{*/
-    /*content: '';*/
+  /*content: '';*/
   /*}*/
 
-  #editor::-webkit-scrollbar-track
-  {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  #editor::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #F5F5F5;
     border-radius: 10px;
   }
 
-  #editor::-webkit-scrollbar
-  {
+  #editor::-webkit-scrollbar {
     width: 10px;
     background-color: #F5F5F5;
   }
 
-  #editor::-webkit-scrollbar-thumb
-  {
+  #editor::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-image: -webkit-gradient(linear,
     left bottom,
     left top,
-    color-stop(0.44, rgb(122,153,217)),
-    color-stop(0.72, rgb(73,125,189)),
-    color-stop(0.86, rgb(28,58,148)));
+    color-stop(0.44, rgb(122, 153, 217)),
+    color-stop(0.72, rgb(73, 125, 189)),
+    color-stop(0.86, rgb(28, 58, 148)));
   }
+
   #uploader {
     clear: both;
   }

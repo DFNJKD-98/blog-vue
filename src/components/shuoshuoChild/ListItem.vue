@@ -3,8 +3,7 @@
     <p id="content" @dblclick="editContent = true">
       <span v-html="item.content"></span>
     </p>
-    <input type="text"
-           v-show="editContent"
+    <input v-show="editContent"
            v-focus="editContent"
            :value="parseMD2DOM(item.content)"
            @keyup.enter="doneEdit"
@@ -23,9 +22,9 @@
     <p id="info">
       <el-tag type="gray"><i class=""></i>{{item.weather.location}}</el-tag>
       <el-tag type="gray"><i class="el-icon-date"></i> {{item.dateStr.slice(5, -3)}}</el-tag>
-      <img :src="getIcons(item.weather.code[0])" width="24"/>
-      <el-tag type="gray" v-show="!item.isPublic" style="float: right;">Private</el-tag>
-      <el-tag type="danger" v-show="isLogin" style="float: right; margin-right: 10px;">Delete</el-tag>
+      <img :src="getIcons(item.weather.code ? item.weather.code[0] : item.weather.code_day ? item.weather.code_day : '0')" width="24"/>
+      <el-tag type="gray" v-show="!item.isPublic">Private</el-tag>
+      <el-button :plain="true" type="warning" v-show="isLogin" size="small" @click="deleteShuoshuo(item.date)" style="float: right;">Delete</el-button>
     </p>
   </el-card>
 </template>
@@ -58,6 +57,11 @@
 
       },
       cancelEdit () {
+
+      },
+      deleteShuoshuo (date) {
+        // todo reload shuoshuo list
+        console.log(date)
 
       },
       getIcons: function (name) {

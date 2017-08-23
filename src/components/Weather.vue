@@ -19,6 +19,7 @@
 </template>
 <script>
   import axios from 'axios'
+  import bus from './common/EventBus'
   export default {
     name: 'Weather',
     data () {
@@ -30,6 +31,7 @@
     mounted () {
       axios.get('/getWeather').then(d => {
         this.WData = d.data
+        bus.$emit('todayWeather', {...d.data.results[0].daily[0], location: d.data.results[0].location.name})
       }).catch(e => this.errorText = `[ ${e.statusCode} ] - ${e.statusText}`)
     },
     methods: {
@@ -52,5 +54,8 @@
 
   .el-row {
     border: none;
+  }
+  .el-card {
+    border: none
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="10">
     <el-col :sm="24" :md="7" :lg="6">
-      <Conclusion :filter="yearFilter" defaultFilter="all" :summary="summary" :errorText="summaryError"></Conclusion>
+      <Conclusion :filter="yearFilter" @todayWeather="todayWeather" defaultFilter="all" :summary="summary" :errorText="summaryError"></Conclusion>
     </el-col>
     <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
       <InputFrame v-show="isLogin"></InputFrame>
@@ -19,6 +19,8 @@
   import InputFrame from './shuoshuoChild/Inputer'
   import Conclusion from './Conclusion'
   import ListItem from './shuoshuoChild/ListItem'
+  import bus from './common/EventBus'
+  // todo 改成vuex吧，因为还要提交之后刷新说说页面也要跨组件通讯
 
   export default {
     name: 'Shuoshuo',
@@ -54,6 +56,9 @@
       yearFilter (year) {
         this.getShuoshuo(year)
       },
+      todayWeather (data) {
+        console.log(data)
+      },
       getShuoshuo (filter = 'all', limit = 20, timeMark = 0) {
         axios.get('/getShuoshuoList', {params: {limit, filter, timeMark}})
           .then(res => this.shuoshuoList = res.data)
@@ -61,10 +66,14 @@
       }
     },
     mounted () {
+      let self = this
       this.getShuoshuo()
       axios.get('/getSummary')
         .then(d => this.summary = d.data[0].summary)
         .catch(e => this.summaryError = `[ ${e.statusCode} ] - ${e.statusText}`)
+      bus.$on('reloadShuoshuo', function() {
+        self.getShuoshuo()
+      })
     },
     watch: {
       needReload () {
