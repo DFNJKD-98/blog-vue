@@ -6,8 +6,14 @@
     <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
       <InputFrame v-show="isLogin"></InputFrame>
       <hr v-show="isLogin">
-      <p v-show="shuoshuoError">{{shuoshuoError}}</p>
-      <div v-show="!shuoshuoError">
+      <el-alert
+        v-if="shuoshuoError"
+        title="load shuoshuo failed."
+        type="error"
+        :closable="false"
+        :description="shuoshuoError">
+      </el-alert>
+      <div v-if="!shuoshuoError">
         <ListItem :needReload="needReload" :key="item.date" v-for="item in shuoshuoList" :isLogin="isLogin" :item="item"></ListItem>
       </div>
     </el-col>
@@ -20,7 +26,6 @@
   import Conclusion from './Conclusion'
   import ListItem from './shuoshuoChild/ListItem'
   import bus from './common/EventBus'
-  // todo 改成vuex吧，因为还要提交之后刷新说说页面也要跨组件通讯
 
   export default {
     name: 'Shuoshuo',
@@ -62,15 +67,15 @@
       getShuoshuo (filter = 'all', limit = 20, timeMark = 0) {
         axios.get('/getShuoshuoList', {params: {limit, filter, timeMark}})
           .then(res => this.shuoshuoList = res.data)
-          .catch(e => this.shuoshuoError = `[ ${e.statusCode} ] - ${e.statusText}`)
+          .catch(e => this.shuoshuoError = e.toString())
       }
     },
     mounted () {
       let self = this
       this.getShuoshuo()
       axios.get('/getSummary')
-        .then(d => this.summary = d.data[0].summary)
-        .catch(e => this.summaryError = `[ ${e.statusCode} ] - ${e.statusText}`)
+        .then(d => this.summary = d.data)
+        .catch(e => self.summaryError = e.toString())
       bus.$on('reloadShuoshuo', function() {
         self.getShuoshuo()
       })

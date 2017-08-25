@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="container">
-      <div id="editor" v-text="shuoshuoText" contenteditable placeholder="hiahiahia~~" @input="bindShuoshuo"></div>
+      <div id="editor" contenteditable placeholder="hiahiahia~~" @input="bindShuoshuo"></div>
       <i class="el-icon-picture" id="img-selector" @click="selectFile()"></i>
       <el-button type="primary" id="submit" :disabled="disableBtn" @click="postShuoshuo()">发表</el-button>
     </div>
@@ -54,8 +54,8 @@
       })
     },
     methods: {
-      handleRemove (file) {
-        console.log(file)
+      handleRemove (file, fileList) {
+        this.fileList.splice(file, 1)
       },
       handleChange (file, fileList) {
         this.fileList = fileList
@@ -69,34 +69,46 @@
       },
       postShuoshuo () {
         let self = this
+        console.log(self.fileList)
         const shuoshuo = {
           content: self.shuoshuoText,
           weather: self.todayWeather,
         }
         let form = new FormData()
-        this.fileList.forEach(function (file, i) {
-          ImgCompress(file.raw, function (b) {
-            form.append('photo', b, file.name)
-            if (i === self.fileList.length - 1) {
-              form.append('obj', JSON.stringify(shuoshuo))
-              console.log(form.get('obj'))
-              console.log(form.get('photo'))
-              // todo  picture test
-
-              axios.post('./postShuoshuo', form)
-                .then(() => {
-                  self.$message.success('Post Shuoshuo Succeed')
-                  self.shuoshuoText = ''
-                  self.fileList = []
-                  bus.$emit('reloadShuoshuo')
-                })
-                .catch(e => {
-                  self.$message.error(e.toString())
-                })
-            }
+        form.append('obj', JSON.stringify(shuoshuo))
+        if (!this.fileList.length) {
+          axios.post('./postShuoshuo', form)
+            .then(() => {
+              self.$message.success('Post Shuoshuo Succeed')
+              self.shuoshuoText = ''
+              self.fileList = []
+              bus.$emit('reloadShuoshuo')
+            })
+            .catch(e => {
+              self.$message.error(e.toString())
+            })
+        } else {
+          this.fileList.forEach(function (file, i) {
+            ImgCompress(file.raw, function (b) {
+              form.append('photo', b, file.name)
+              if (i === self.fileList.length - 1 ) {
+                axios.post('./postShuoshuo', form)
+                  .then(() => {
+                    self.$message.success('Post Shuoshuo Succeed')
+                    self.shuoshuoText = ''
+                    self.fileList = []
+                    bus.$emit('reloadShuoshuo')
+                  })
+                  .catch(e => {
+                    self.$message.error(e.toString())
+                  })
+              }
+            })
           })
+        }
 
-        })
+
+
 
       },
       bindShuoshuo (e) {

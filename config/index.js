@@ -3,7 +3,11 @@ var path = require('path')
 
 const proxyTable = {
   all: {
-    filter: ['/getShuoshuoList', '/login', '/logout', '/getSummary', '/getWeather', '/postShuoshuo'],
+    filter: [
+      '/login', '/logout',
+      '/getShuoshuoList', '/getSummary', '/getWeather', '/postShuoshuo', '/deleteShuoshuo',
+      '/blogImageUpload'
+    ],
     target: 'https://localhost:9981/',
     secure: false
   }

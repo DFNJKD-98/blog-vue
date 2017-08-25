@@ -1,19 +1,24 @@
 <template>
 
-  <div id="wrapper">
-    <h2>Summary</h2>
-    <div v-show="errorText">{{errorText}}</div>
-    <el-menu v-show="!errorText" :default-active=defaultFilter class="el-menu-vertical-demo" style="border: solid #999; border-width: 1px 0; margin-bottom: 20px;">
-      <el-menu-item :key="item.year" :index="item.year" v-for="item in summaryData" @click="filter(item.year)">
-        {{item.year}}
-        <el-tag typeof="primary">{{item.count}}</el-tag>
-      </el-menu-item>
-    </el-menu>
+    <div id="wrapper">
+      <h2>Summary</h2>
 
-    <Weather></Weather>
+      <el-alert
+        v-if="errorText"
+        title="load summary failed."
+        type="error"
+        :closable="false"
+        :description="errorText">
+      </el-alert>
+      <el-menu v-if="!errorText" :default-active=defaultFilter class="el-menu-vertical-demo" style="border: solid #999; border-width: 1px 0; margin-bottom: 20px;">
+        <el-menu-item :key="item.year" :index="item.year" v-for="item in summaryData" @click="filter(item.year)">
+          {{item.year}}
+          <el-tag typeof="primary">{{item.count}}</el-tag>
+        </el-menu-item>
+      </el-menu>
+
+      <Weather></Weather>
   </div>
-
-
 </template>
 
 <script>

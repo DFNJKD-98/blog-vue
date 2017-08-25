@@ -30,6 +30,8 @@
 </template>
 <script>
 
+  import axios from 'axios'
+  import bus from '../common/EventBus'
   export default {
     name: 'ListItem',
     props: {
@@ -60,8 +62,15 @@
 
       },
       deleteShuoshuo (date) {
-        // todo reload shuoshuo list
-        console.log(date)
+        axios.delete('./deleteShuoshuo', {params: {date}})
+          .then(d => {
+//            if (d.data.result.value.date === date) {
+//               todo 弹出框提醒
+//            }
+            bus.$emit('reloadShuoshuo')
+
+          })
+          .catch(e=>console.log(e.toString()))
 
       },
       getIcons: function (name) {
