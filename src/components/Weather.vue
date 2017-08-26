@@ -5,7 +5,6 @@
       <el-row style="text-align: center">
         <el-col :span="8" v-for="(item, index) in WData.results[0].daily" :key="item.date" :style="index < WData.results[0].daily.length - 1 ? 'border-right: 1px solid #999' : ''">
           <el-card :body-style="{ padding: '0px', border: 'none'}">
-            <!--<img src="../assets/weatherIcons/" class="image">-->
             <div>
               <div class="bottom clearfix">
                 <img width="30" :src="getIcons(item.code_day)"> ~

@@ -4,12 +4,17 @@
 
       <el-row :gutter="10">
         <el-col :push="2" :xs="20" :sm="20" :md="20" :lg="20">
-          <el-menu :default-active="indexActive" class="el-menu-demo" mode="horizontal" :router=true :xs="20" :sm="20" :md="20" :lg="20">
-            <el-menu-item :key="item.path" v-for="item in menuTable" :index="item.path"><i :class="item.icon"></i>{{item.title}}</el-menu-item>
-            <!--<el-menu-item :route="{name: '/moments'}" index="/moments">Moments</el-menu-item>-->
-            <!--<el-menu-item :route="{name: '/blog'}" index="/blog">Blog</el-menu-item>-->
-            <!--<el-menu-item :route="{name: '/projects'}" index="/projects">Projects</el-menu-item>-->
-            <!--<el-menu-item :route="{name: '/hello'}" index="/Hello">Hello</el-menu-item>-->
+          <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" :router=true :xs="20" :sm="20" :md="20" :lg="20">
+            <el-menu-item
+              :key="item.path"
+              v-for="item in $router.options.routes"
+              v-if="!item.private || isLogin"
+              :index="item.path"
+              :route="{name: item.name}"
+              :disabled="false"
+            >
+              <i :class="item.icon"></i>{{item.name}}
+            </el-menu-item>
             <li id="login" class="el-menu-item">
               <el-button type="success" v-if="!isLogin" @click="showLoginFrame = true">Login</el-button>
               <el-button v-if="isLogin" @click="logOut()">LogOut</el-button>
@@ -58,18 +63,9 @@
     name: 'app',
     data () {
       return {
-        menuTable: [
-          {name: 'index', title: 'Index', path: '/', icon: 'el-icon-menu', isPublic: true},
-          {name: 'moments', title: 'Moments', path: '/moments', icon: 'el-icon-menu', isPublic: true},
-          {name: 'blog', title: 'Blog', path: '/blog', icon: 'el-icon-menu', isPublic: true},
-          {name: 'projects', title: 'Projects', path: '/projects', icon: 'el-icon-menu', isPublic: false},
-          {name: 'blog poster', title: 'Blog Poster', path: '/editor', icon: 'el-icon-menu', isPublic: false},
-          {name: 'hello', title: 'Hello', path: '/hello', icon: 'el-icon-menu', isPublic: true},
-        ],
         isLogin: false,
         logFailed: false,
         alertContent: '',
-        indexActive: '/',
         showLoginFrame: false,
         needReload: false,
         mark: 'all',
@@ -82,10 +78,6 @@
       }
     },
     mounted () {
-//      this.$router.beforeEach((to, from, next) => {
-//        this.indexActive = to.path
-//        next()
-//      })
       this.isLogin =  document.cookie.indexOf('login=bingo') > -1
     },
     methods: {
@@ -115,7 +107,7 @@
         let self = this
         axios.post('/logout')
           .then(res => {
-            if (res.data === 'succeed') {
+            if (res.status === 200) {
               self.isLogin = false
               self.needReload = true
             } else {

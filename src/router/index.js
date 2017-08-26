@@ -5,17 +5,14 @@ import Index from '@/components/Index'
 import Moments from '@/components/Moments'
 import Blog from '@/components/Blog'
 import Projects from '@/components/Projects'
+import Editor from '@/components/Editor'
+import ImageUploader from '@/components/ImageUploader'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/hello',
-      name: 'Hello',
-      component: Hello
-    },
     {
       path: '/',
       name: 'Index',
@@ -35,6 +32,23 @@ export default new Router({
       path: '/projects',
       name: 'Projects',
       component: Projects
-    }
+    },
+    {
+      path: '/editor',
+      name: 'Blog Poster',
+      private: true,
+      component: Editor
+    },
+    {
+      path: '/imageUploader',
+      name: 'Image Bed',
+      private: true,
+      component: ImageUploader
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: Hello
+    },
   ]
 })

@@ -5,7 +5,7 @@ const proxyTable = {
   all: {
     filter: [
       '/login', '/logout',
-      '/getShuoshuoList', '/getSummary', '/getWeather', '/postShuoshuo', '/deleteShuoshuo',
+      '/getMomentsList', '/getSummary', '/getWeather', '/postMoments', '/deleteMoments',
       '/blogImageUpload'
     ],
     target: 'https://localhost:9981/',

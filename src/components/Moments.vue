@@ -65,33 +65,33 @@
     },
     methods: {
       yearFilter (year) {
-        this.getmoments(year)
+        this.getMoments(year)
       },
       todayWeather (data) {
         console.log(data)
       },
-      getmoments (filter='all', limit=20, page=1) {
-        axios.get('/getmomentsList', {params: {limit, filter, page}})
+      getMoments (filter='all', limit=20, page=1) {
+        axios.get('/getMomentsList', {params: {limit, filter, page}})
           .then(res => this.momentsList = res.data)
           .catch(e => this.momentsError = e.toString())
       },
       loadMore(n) {
-        this.getmoments(this.filter, 20, n)
+        this.getMoments(this.filter, 20, n)
       }
     },
     mounted () {
       let self = this
-      this.getmoments()
+      this.getMoments()
       axios.get('/getSummary')
         .then(d => this.summary = d.data)
         .catch(e => self.summaryError = e.toString())
-      bus.$on('reloadmoments', function() {
-        self.getmoments()
+      bus.$on('reloadMoments', function() {
+        self.getMoments()
       })
     },
     watch: {
       needReload () {
-        this.getmoments()
+        this.getMoments()
       }
     }
   }

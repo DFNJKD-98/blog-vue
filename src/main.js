@@ -1,5 +1,5 @@
 import Vue from 'vue'
-// import store from './store/index'
+import store from './store/index'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
@@ -14,7 +14,7 @@ Vue.use(ElementUI)
 // todo 添加说说和删除说说的时候也要更新summary
 new Vue({
   el: '#app',
-  // store,
+  store,
   router,
   template: '<App/>',
   components: { App }
