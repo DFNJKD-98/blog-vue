@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Index from '@/components/Index'
-import Shuoshuo from '@/components/Shuoshuo'
+import Moments from '@/components/Moments'
 import Blog from '@/components/Blog'
 import Projects from '@/components/Projects'
 
@@ -22,17 +22,17 @@ export default new Router({
       component: Index
     },
     {
-      path: '/Shuoshuo',
-      name: 'Shuoshuo',
-      component: Shuoshuo
+      path: '/moments',
+      name: 'Moments',
+      component: Moments
     },
     {
-      path: '/Blog',
+      path: '/blog',
       name: 'Blog',
       component: Blog
     },
     {
-      path: '/Projects',
+      path: '/projects',
       name: 'Projects',
       component: Projects
     }

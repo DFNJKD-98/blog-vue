@@ -14,7 +14,7 @@
         editContent: false,
         filter: 'all',
         timeMark: 0,
-        shuoshuoList: [],
+        momentsList: [],
         host: process.env.APIUrlPrefix
       }
     },
@@ -34,14 +34,14 @@
       }
     },
     mounted () {
-      axios.get('/getShuoshuoList', {
+      axios.get('/getMomentsList', {
         params: {
           limit: 20,
           filter: this.filter,
           timeMark: this.timeMark
         }
       }).then(res => {
-        this.shuoshuoList = res.data
+        this.momentsList = res.data
 //        console.log(res)
       }).catch(e => console.error(e))
     },
@@ -55,7 +55,7 @@
 //          delete
 //        }
       },
-      deleteShuoshuo () {
+      deleteMoments () {
 
       },
       cancelEdit () {
@@ -76,14 +76,14 @@
     },
     watch: {
       needReload () {
-        axios.get('/getShuoshuoList', {
+        axios.get('/getMomentsList', {
           params: {
             limit: 20,
             filter: this.filter,
             timeMark: this.timeMark
           }
         }).then(res => {
-          this.shuoshuoList = res.data
+          this.momentsList = res.data
 //        console.log(res)
         }).catch(e => console.error(e))
       }

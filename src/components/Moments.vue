@@ -7,14 +7,22 @@
       <InputFrame v-show="isLogin"></InputFrame>
       <hr v-show="isLogin">
       <el-alert
-        v-if="shuoshuoError"
-        title="load shuoshuo failed."
+        v-if="momentsError"
+        title="load moments failed."
         type="error"
         :closable="false"
-        :description="shuoshuoError">
+        :description="momentsError">
       </el-alert>
-      <div v-if="!shuoshuoError">
-        <ListItem :needReload="needReload" :key="item.date" v-for="item in shuoshuoList" :isLogin="isLogin" :item="item"></ListItem>
+      <div v-if="!momentsError">
+        <ListItem :needReload="needReload" :key="item.date" v-for="item in momentsList" :isLogin="isLogin" :item="item"></ListItem>
+      </div>
+      <div class="pagination">
+        <el-pagination
+          layout="prev, pager, next"
+          :page-size="20"
+          @current-change="loadMore"
+          :total=summary.all>
+        </el-pagination>
       </div>
     </el-col>
   </el-row>
@@ -22,13 +30,13 @@
 
 <script>
   import axios from 'axios'
-  import InputFrame from './shuoshuoChild/Inputer'
+  import InputFrame from './momentsChild/Inputer'
   import Conclusion from './Conclusion'
-  import ListItem from './shuoshuoChild/ListItem'
+  import ListItem from './momentsChild/ListItem'
   import bus from './common/EventBus'
 
   export default {
-    name: 'Shuoshuo',
+    name: 'Moments',
     props: {
       isLogin: {
         type: Boolean,
@@ -49,44 +57,53 @@
     data () {
       return {
         summary: {},
-        shuoshuoList: [],
-        timeMark: 0,
-        loadMoreLimit: 10,
+        momentsList: [],
         filter: 'all',
         summaryError: '',
-        shuoshuoError: ''
+        momentsError: ''
       }
     },
     methods: {
       yearFilter (year) {
-        this.getShuoshuo(year)
+        this.getmoments(year)
       },
       todayWeather (data) {
         console.log(data)
       },
-      getShuoshuo (filter = 'all', limit = 20, timeMark = 0) {
-        axios.get('/getShuoshuoList', {params: {limit, filter, timeMark}})
-          .then(res => this.shuoshuoList = res.data)
-          .catch(e => this.shuoshuoError = e.toString())
+      getmoments (filter='all', limit=20, page=1) {
+        axios.get('/getmomentsList', {params: {limit, filter, page}})
+          .then(res => this.momentsList = res.data)
+          .catch(e => this.momentsError = e.toString())
+      },
+      loadMore(n) {
+        this.getmoments(this.filter, 20, n)
       }
     },
     mounted () {
       let self = this
-      this.getShuoshuo()
+      this.getmoments()
       axios.get('/getSummary')
         .then(d => this.summary = d.data)
         .catch(e => self.summaryError = e.toString())
-      bus.$on('reloadShuoshuo', function() {
-        self.getShuoshuo()
+      bus.$on('reloadmoments', function() {
+        self.getmoments()
       })
     },
     watch: {
       needReload () {
-        this.getShuoshuo()
+        this.getmoments()
       }
     }
   }
 </script>
+<style scoped>
+  .pagination {
+    margin-top: 30px;
+    text-align: center;
+    padding: 10px 0;
+    background-color: aliceblue;
+  }
+</style>
 <style>
   .el-card__body {
     padding: 0;

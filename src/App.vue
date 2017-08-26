@@ -5,11 +5,11 @@
       <el-row :gutter="10">
         <el-col :push="2" :xs="20" :sm="20" :md="20" :lg="20">
           <el-menu :default-active="indexActive" class="el-menu-demo" mode="horizontal" :router=true :xs="20" :sm="20" :md="20" :lg="20">
-            <el-menu-item index="/"><i class="el-icon-menu"></i>Index</el-menu-item>
-            <el-menu-item index="/shuoshuo">Shuoshuo</el-menu-item>
-            <el-menu-item index="/blog">Blog</el-menu-item>
-            <el-menu-item index="/projects">Projects</el-menu-item>
-            <el-menu-item index="/Hello">Hello</el-menu-item>
+            <el-menu-item :key="item.path" v-for="item in menuTable" :index="item.path"><i :class="item.icon"></i>{{item.title}}</el-menu-item>
+            <!--<el-menu-item :route="{name: '/moments'}" index="/moments">Moments</el-menu-item>-->
+            <!--<el-menu-item :route="{name: '/blog'}" index="/blog">Blog</el-menu-item>-->
+            <!--<el-menu-item :route="{name: '/projects'}" index="/projects">Projects</el-menu-item>-->
+            <!--<el-menu-item :route="{name: '/hello'}" index="/Hello">Hello</el-menu-item>-->
             <li id="login" class="el-menu-item">
               <el-button type="success" v-if="!isLogin" @click="showLoginFrame = true">Login</el-button>
               <el-button v-if="isLogin" @click="logOut()">LogOut</el-button>
@@ -58,10 +58,18 @@
     name: 'app',
     data () {
       return {
+        menuTable: [
+          {name: 'index', title: 'Index', path: '/', icon: 'el-icon-menu', isPublic: true},
+          {name: 'moments', title: 'Moments', path: '/moments', icon: 'el-icon-menu', isPublic: true},
+          {name: 'blog', title: 'Blog', path: '/blog', icon: 'el-icon-menu', isPublic: true},
+          {name: 'projects', title: 'Projects', path: '/projects', icon: 'el-icon-menu', isPublic: false},
+          {name: 'blog poster', title: 'Blog Poster', path: '/editor', icon: 'el-icon-menu', isPublic: false},
+          {name: 'hello', title: 'Hello', path: '/hello', icon: 'el-icon-menu', isPublic: true},
+        ],
         isLogin: false,
         logFailed: false,
         alertContent: '',
-        indexActive: this.$route.path,
+        indexActive: '/',
         showLoginFrame: false,
         needReload: false,
         mark: 'all',
@@ -74,10 +82,10 @@
       }
     },
     mounted () {
-      this.$router.beforeEach((to, from, next) => {
-        this.indexActive = to.path
-        next()
-      })
+//      this.$router.beforeEach((to, from, next) => {
+//        this.indexActive = to.path
+//        next()
+//      })
       this.isLogin =  document.cookie.indexOf('login=bingo') > -1
     },
     methods: {
@@ -87,7 +95,7 @@
         if (this.form.username.trim() && this.form.password) {
           axios.post('/login', {...this.form})
             .then(function (response) {
-              if (response.data === 'succeed') {
+              if (response.status === 200) {
                 self.showLoginFrame = false
                 self.isLogin = true
                 self.needReload = true

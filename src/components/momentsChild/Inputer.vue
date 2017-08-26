@@ -1,9 +1,9 @@
 <template>
   <div>
     <div id="container">
-      <div id="editor" contenteditable placeholder="hiahiahia~~" @input="bindShuoshuo"></div>
+      <div id="editor"v-text="momentsText" contenteditable placeholder="hiahiahia~~" @input="bindMoments"></div>
       <i class="el-icon-picture" id="img-selector" @click="selectFile()"></i>
-      <el-button type="primary" id="submit" :disabled="disableBtn" @click="postShuoshuo()">发表</el-button>
+      <el-button type="primary" id="submit" :disabled="disableBtn" @click="postMoments()">发表</el-button>
     </div>
 
     <el-row style="padding: 5px;">
@@ -39,7 +39,7 @@
     name: 'InputFrame',
     data () {
       return {
-        shuoshuoText: '',
+        momentsText: '',
         fileList: [],
         dialogImageUrl: '',
         todayWeather: {},
@@ -67,22 +67,22 @@
       selectFile () {
         document.querySelector('input[type="file"]').click()
       },
-      postShuoshuo () {
+      postMoments () {
         let self = this
         console.log(self.fileList)
-        const shuoshuo = {
-          content: self.shuoshuoText,
+        const moments = {
+          content: self.momentsText,
           weather: self.todayWeather,
         }
         let form = new FormData()
-        form.append('obj', JSON.stringify(shuoshuo))
+        form.append('obj', JSON.stringify(moments))
         if (!this.fileList.length) {
-          axios.post('./postShuoshuo', form)
+          axios.post('./postMoments', form)
             .then(() => {
-              self.$message.success('Post Shuoshuo Succeed')
-              self.shuoshuoText = ''
+              self.$message.success('Post Moments Succeed')
+              self.momentsText = ''
               self.fileList = []
-              bus.$emit('reloadShuoshuo')
+              bus.$emit('reloadMoments')
             })
             .catch(e => {
               self.$message.error(e.toString())
@@ -92,12 +92,12 @@
             ImgCompress(file.raw, function (b) {
               form.append('photo', b, file.name)
               if (i === self.fileList.length - 1 ) {
-                axios.post('./postShuoshuo', form)
+                axios.post('./postMoments', form)
                   .then(() => {
-                    self.$message.success('Post Shuoshuo Succeed')
-                    self.shuoshuoText = ''
+                    self.$message.success('Post Moments Succeed')
+                    self.momentsText = ''
                     self.fileList = []
-                    bus.$emit('reloadShuoshuo')
+                    bus.$emit('reloadMoments')
                   })
                   .catch(e => {
                     self.$message.error(e.toString())
@@ -111,13 +111,13 @@
 
 
       },
-      bindShuoshuo (e) {
-        this.shuoshuoText = e.target.innerHTML
+      bindMoments (e) {
+        this.momentsText = e.target.innerHTML
       }
     },
     computed: {
       disableBtn () {
-        return !this.shuoshuoText.trim()
+        return !this.momentsText.trim()
       }
     },
 //    directives: {

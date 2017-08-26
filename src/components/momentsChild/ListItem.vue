@@ -24,7 +24,7 @@
       <el-tag type="gray"><i class="el-icon-date"></i> {{item.dateStr.slice(5, -3)}}</el-tag>
       <img :src="getIcons(item.weather.code ? item.weather.code[0] : item.weather.code_day ? item.weather.code_day : '0')" width="24"/>
       <el-tag type="gray" v-show="!item.isPublic">Private</el-tag>
-      <el-button :plain="true" type="warning" v-show="isLogin" size="small" @click="deleteShuoshuo(item.date)" style="float: right;">Delete</el-button>
+      <el-button :plain="true" type="warning" v-show="isLogin" size="small" @click="deleteMoments(item.date)" style="float: right;">Delete</el-button>
     </p>
   </el-card>
 </template>
@@ -61,13 +61,13 @@
       cancelEdit () {
 
       },
-      deleteShuoshuo (date) {
-        axios.delete('./deleteShuoshuo', {params: {date}})
+      deleteMoments (date) {
+        axios.delete('./deleteMoments', {params: {date}})
           .then(d => {
 //            if (d.data.result.value.date === date) {
 //               todo 弹出框提醒
 //            }
-            bus.$emit('reloadShuoshuo')
+            bus.$emit('reloadMoments')
 
           })
           .catch(e=>console.log(e.toString()))
