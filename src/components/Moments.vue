@@ -1,7 +1,12 @@
 <template>
   <el-row :gutter="10">
     <el-col :sm="24" :md="7" :lg="6">
-      <Conclusion :filter="yearFilter" @todayWeather="todayWeather" defaultFilter="all" :summary="summary" :errorText="summaryError"></Conclusion>
+      <Info></Info>
+      <br>
+      <Conclusion :filter="yearFilter" @todayWeather="todayWeather" defaultFilter="all" :summary="summary"
+                  :errorText="summaryError"
+      ></Conclusion>
+      <br>
     </el-col>
     <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
       <InputFrame v-show="isLogin"></InputFrame>
@@ -14,7 +19,8 @@
         :description="momentsError">
       </el-alert>
       <div v-if="!momentsError">
-        <ListItem :needReload="needReload" :key="item.date" v-for="item in momentsList" :isLogin="isLogin" :item="item"></ListItem>
+        <ListItem :needReload="needReload" :key="item.date" v-for="item in momentsList" :isLogin="isLogin"
+                  :item="item"></ListItem>
       </div>
       <div class="pagination">
         <el-pagination
@@ -25,12 +31,14 @@
         </el-pagination>
       </div>
     </el-col>
+    <br>
   </el-row>
 </template>
 
 <script>
   import axios from 'axios'
   import InputFrame from './momentsChild/Inputer'
+  import Info from '@/components/info'
   import Conclusion from './Conclusion'
   import ListItem from './momentsChild/ListItem'
   import bus from './common/EventBus'
@@ -52,7 +60,8 @@
     components: {
       Conclusion,
       InputFrame,
-      ListItem
+      ListItem,
+      Info,
     },
     data () {
       return {
@@ -70,14 +79,15 @@
       todayWeather (data) {
         console.log(data)
       },
-      getMoments (filter='all', limit=20, page=1) {
+      getMoments (filter = 'all', limit = 20, page = 1) {
         axios.get('/getMomentsList', {params: {limit, filter, page}})
           .then(res => this.momentsList = res.data)
           .catch(e => this.momentsError = e.toString())
       },
-      loadMore(n) {
-        this.getMoments(this.filter, 20, n)
-      }
+      loadMore (pageIndex) {
+        this.getMoments(this.filter, 20, pageIndex)
+      },
+
     },
     mounted () {
       let self = this
@@ -85,8 +95,16 @@
       axios.get('/getSummary')
         .then(d => this.summary = d.data)
         .catch(e => self.summaryError = e.toString())
-      bus.$on('reloadMoments', function() {
+      bus.$on('reloadMoments', function () {
         self.getMoments()
+      })
+      bus.$on('reloadSummary', function () {
+        axios.get('/getSummary')
+          .then(d => self.summary = d.data)
+          .catch(e => self.summaryError = e.toString())
+      })
+      bus.$on('DeleteMomentSuccess', function () {
+        this.$message.success('Delete moment success.');
       })
     },
     watch: {

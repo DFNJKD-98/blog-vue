@@ -36,12 +36,14 @@ export default new Router({
     {
       path: '/editor',
       name: 'Blog Poster',
+      // icon: 'el-icon-edit',
       private: true,
       component: Editor
     },
     {
       path: '/imageUploader',
       name: 'Image Bed',
+      // icon: 'el-icon-picture',
       private: true,
       component: ImageUploader
     },

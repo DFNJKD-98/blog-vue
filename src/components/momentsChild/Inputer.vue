@@ -23,7 +23,7 @@
 
     <!--预览-->
     <el-dialog v-model="dialogVisible" size="full">
-      <img width="100%" :src="dialogImageUrl" alt="">
+      <img width="100%" :src="dialogImageUrl">
     </el-dialog>
 
 
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import ImgCompress from '../ImgCompress.js'
+  import ImgCompress from './ImgCompress'
   import bus from '../common/EventBus'
   import axios from 'axios'
 
@@ -83,6 +83,7 @@
               self.momentsText = ''
               self.fileList = []
               bus.$emit('reloadMoments')
+              bus.$emit('reloadSummary')
             })
             .catch(e => {
               self.$message.error(e.toString())
@@ -98,6 +99,7 @@
                     self.momentsText = ''
                     self.fileList = []
                     bus.$emit('reloadMoments')
+                    bus.$emit('reloadSummary')
                   })
                   .catch(e => {
                     self.$message.error(e.toString())
@@ -106,10 +108,6 @@
             })
           })
         }
-
-
-
-
       },
       bindMoments (e) {
         this.momentsText = e.target.innerHTML
@@ -120,20 +118,6 @@
         return !this.momentsText.trim()
       }
     },
-//    directives: {
-//      divmodel: {
-//        bind (el, binding, vnode) {
-//          el.innerHTML = binding.value
-//        },
-//        update (newValue, oldValue) {
-//          console.log(newValue, oldValue)
-////          console.log(el, binding, vnode)
-//        },
-//        unbind () {
-//
-//        }
-//      }
-//    }
   }
 </script>
 

@@ -64,10 +64,11 @@
       deleteMoments (date) {
         axios.delete('./deleteMoments', {params: {date}})
           .then(d => {
-//            if (d.data.result.value.date === date) {
-//               todo 弹出框提醒
-//            }
+            if (d.data.result.value.date === date) {
+              bus.$emit('DeleteMomentSuccess')
+            }
             bus.$emit('reloadMoments')
+            bus.$emit('reloadSummary')
 
           })
           .catch(e=>console.log(e.toString()))
