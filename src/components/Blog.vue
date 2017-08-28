@@ -1,17 +1,17 @@
 <template>
   <el-row :gutter="10">
-    <el-col :sm="24" :md="7" :lg="6">
+    <el-col :xs="24" :sm="24" :md="7" :lg="6">
       <Conclusion :filter="tagFilter" defaultFilter="aa" :summary="summary" :errorText="summaryError"></Conclusion>
     </el-col>
-    <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
+    <el-col :xs="24" :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
       <BlogList v-for="i in 5" :key="i"></BlogList>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import axios from 'axios'
-import BlogList from './blogChildren/BlogList'
+  import axios from 'axios'
+  import BlogList from './blogChildren/Article'
   import Conclusion from './Conclusion'
 
   export default {
@@ -27,11 +27,15 @@ import BlogList from './blogChildren/BlogList'
         msg: 'This is Blog'
       }
     },
+    mounted () {
+      axios.get('/blogList')
+        .then(d => d.data)
+        .catch(e => this.summaryError = e.message)
+
+    },
     methods: {
-      getBlogs () {
-        axios.get('/blogList')
-          .then(d => d.data)
-          .catch(e => this.summaryError = e.message)
+      getBlogList (page, tag) {
+
       },
       tagFilter () {
 

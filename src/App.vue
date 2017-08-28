@@ -27,8 +27,8 @@
     <br>
 
     <el-row>
-      <el-col :push="2" :sm="20" :md="20" :lg="20">
-    <router-view :isLogin="isLogin" :needReload = needReload></router-view>
+      <el-col :push="2" :xs="20" :sm="20" :md="20" :lg="20">
+    <router-view :isLogin="isLogin"></router-view>
       </el-col>
     </el-row>
 

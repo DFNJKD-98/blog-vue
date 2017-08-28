@@ -69,7 +69,6 @@
       },
       postMoments () {
         let self = this
-        console.log(self.fileList)
         const moments = {
           content: self.momentsText,
           weather: self.todayWeather,
@@ -86,7 +85,7 @@
               bus.$emit('reloadSummary')
             })
             .catch(e => {
-              self.$message.error(e.toString())
+              self.$message.error(e.response.data.message)
             })
         } else {
           this.fileList.forEach(function (file, i) {
