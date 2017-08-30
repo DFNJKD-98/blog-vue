@@ -6,7 +6,7 @@ const proxyTable = {
     filter: [
       '/login', '/logout',
       '/getMomentsList', '/getSummary', '/getWeather', '/postMoments', '/deleteMoments',
-      '/blogImageUpload', '/blogList',
+      '/blogImageUpload', '/blogList', '/blogSummary'
     ],
     target: 'https://localhost:9981/',
     secure: false

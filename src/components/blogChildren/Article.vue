@@ -2,16 +2,35 @@
   <article class="post post-list">
     <div class="meta">
       <div class="date">
-        <time>Aug 06, 2017</time>
+        <time>{{blog.createDateStr}}</time>
       </div>
-      <div class="comment"><a href="/post/enable-tls-1-3.html#comments">25 Comments</a></div>
+      <div class="comment" v-if="blog.commentCount"><a :href="'/blog/' + blog.originalFileName + '#comments'">{{blog.commentCount}} Comments</a></div>
     </div>
-    <h1 class="title"><a href="/post/enable-tls-1-3.html">本博客开始支持 TLS 1.3</a></h1>
-    <div class="entry-content"><p>
-      几个月前，我在升级本博客所用 Nginx 时，顺手加上了对 TLS 1.3 的支持，本文贴出详细的步骤和注意事项。有关 TLS 1.3 的介绍可以看 CloudFlare 的这篇文章：An overview of TLS 1.3 and Q&amp;A。需要注意目前 Chrome 和 Firefox 支持的是 TLS 1.3 draft 18，暂时不要用在生产环境。 [...]</p>
-      <p><a href="/post/enable-tls-1-3.html" class="more-link">继续阅读 »</a></p></div>
+    <h1 class="title"><a :href="'/blog/' + blog.originalFileName">{{blog.title}}</a></h1>
+    <div class="entry-content">
+      <p v-html="blog.abstract"></p>
+      <p>Tags: <el-tag v-for="(tag, i) in blog.tags" :key="i" style="margin-left: 5px;">{{tag}}</el-tag></p>
+      <p><a :href="'/blog/' + blog.originalFileName" class="more-link">继续阅读 »</a></p>
+    </div>
   </article>
 </template>
+
+<script>
+  export default {
+    name: 'Article',
+    props: {
+      blog: {
+        type: Object,
+        require: true,
+      }
+    },
+    data () {
+      return {
+
+      }
+    }
+  }
+</script>
 
 <style>
   article {

@@ -67,7 +67,6 @@
         logFailed: false,
         alertContent: '',
         showLoginFrame: false,
-        needReload: false,
         mark: 'all',
         form: {
           username: 'test',
@@ -90,7 +89,6 @@
               if (response.status === 200) {
                 self.showLoginFrame = false
                 self.isLogin = true
-                self.needReload = true
               }
             })
             .catch(function (error) {
@@ -109,7 +107,6 @@
           .then(res => {
             if (res.status === 200) {
               self.isLogin = false
-              self.needReload = true
             } else {
               console.error('logout failed: ', res)
             }

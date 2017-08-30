@@ -19,7 +19,7 @@
         :description="momentsError">
       </el-alert>
       <div v-if="!momentsError">
-        <ListItem :needReload="needReload" :key="item.date" v-for="item in momentsList" :isLogin="isLogin"
+        <ListItem :key="item.date" v-for="item in momentsList" :isLogin="isLogin"
                   :item="item"></ListItem>
       </div>
       <div class="pagination">
@@ -47,11 +47,6 @@
     name: 'Moments',
     props: {
       isLogin: {
-        type: Boolean,
-        required: true,
-        default: false
-      },
-      needReload: {
         type: Boolean,
         required: true,
         default: false
@@ -106,11 +101,6 @@
       bus.$on('DeleteMomentSuccess', function () {
         this.$message.success('Delete moment success.');
       })
-    },
-    watch: {
-      needReload () {
-        this.getMoments()
-      }
     }
   }
 </script>
