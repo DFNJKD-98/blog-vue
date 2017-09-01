@@ -6,11 +6,16 @@ const proxyTable = {
     filter: [
       '/login', '/logout',
       '/getMomentsList', '/getSummary', '/getWeather', '/postMoments', '/deleteMoments',
-      '/blogImageUpload', '/blogList', '/blogSummary'
+      '/blogImageUpload', '/blogList', '/blogSummary', '/getBlog'
     ],
     target: 'https://localhost:9981/',
     secure: false
-  }
+  },
+  // others: {
+  //   filter: ['/blog/**'],
+  //   target: 'https://localhost:9981/',
+  //   secure: false
+  // }
 }
 
 module.exports = {

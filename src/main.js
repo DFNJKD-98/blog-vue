@@ -11,7 +11,6 @@ axios.defaults.withCredentials = true
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
-// todo 添加说说和删除说说的时候也要更新summary
 new Vue({
   el: '#app',
   store,

@@ -3,7 +3,7 @@
     <div id="header">
 
       <el-row :gutter="10">
-        <el-col :push="2" :xs="20" :sm="20" :md="20" :lg="20">
+        <el-col>
           <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" :router=true :xs="20" :sm="20" :md="20" :lg="20">
             <el-menu-item
               :key="item.path"
@@ -27,7 +27,7 @@
     <br>
 
     <el-row>
-      <el-col :push="2" :xs="20" :sm="20" :md="20" :lg="20">
+      <el-col>
     <router-view :isLogin="isLogin"></router-view>
       </el-col>
     </el-row>

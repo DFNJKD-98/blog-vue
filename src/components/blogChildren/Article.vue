@@ -4,13 +4,13 @@
       <div class="date">
         <time>{{blog.createDateStr}}</time>
       </div>
-      <div class="comment" v-if="blog.commentCount"><a :href="'/blog/' + blog.originalFileName + '#comments'">{{blog.commentCount}} Comments</a></div>
+      <div class="comment" v-if="blog.commentCount"><a :href="'/blog/' + blog.escapeName + '#comments'">{{blog.commentCount}} Comments</a></div>
     </div>
-    <h1 class="title"><a :href="'/blog/' + blog.originalFileName">{{blog.title}}</a></h1>
+    <h1 class="title"><a :href="'/blog/' + blog.escapeName">{{blog.title}}</a></h1>
     <div class="entry-content">
       <p v-html="blog.abstract"></p>
       <p>Tags: <el-tag v-for="(tag, i) in blog.tags" :key="i" style="margin-left: 5px;">{{tag}}</el-tag></p>
-      <p><a :href="'/blog/' + blog.originalFileName" class="more-link">继续阅读 »</a></p>
+      <p><a :href="'/blog/' + blog.escapeName" class="more-link">继续阅读 »</a></p>
     </div>
   </article>
 </template>
@@ -36,7 +36,8 @@
   article {
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #fff;
-    padding: 30px 0;
+    padding-top: 5px;
+    padding-bottom: 30px;
     position: relative;
   }
   article .meta {
@@ -59,6 +60,7 @@
     font-size: 2em;
     font-weight: 300;
     line-height: 35px;
+    margin-top: 0;
     margin-bottom: 25px;
   }
   article h1.title a {

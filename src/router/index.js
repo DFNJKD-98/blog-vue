@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Index from '@/components/Index'
 import Moments from '@/components/Moments'
-import Blog from '@/components/Blog'
+import BlogIndex from '@/components/BlogIndex'
+import Blog from '@/components/blogChildren/Blog'
 import Projects from '@/components/Projects'
 import Editor from '@/components/Editor'
 import ImageUploader from '@/components/ImageUploader'
@@ -24,9 +25,9 @@ export default new Router({
       component: Moments
     },
     {
-      path: '/blog',
+      path: '/BlogIndex',
       name: 'Blog',
-      component: Blog
+      component: BlogIndex
     },
     {
       path: '/projects',
@@ -51,6 +52,11 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: Hello
+    },
+    {
+      path: '/blog/*',
+      name: 'blog',
+      component: Blog
     },
   ]
 })
