@@ -1,56 +1,144 @@
 <template>
-  <div>
-    <article v-html="blog.html" class="markdown-body">
+  <div id="container">
+    <div id="meta">
+      <div>
+      <span>read: {{blog.readCount}}</span>
+      </div>
+      <div>
+        <span>comments: {{blog.commentCount}}</span>
+      </div>
+    </div>
+    <h1>{{blog.title}}</h1>
+    <div id="content" class="markdown-body">
+      <div id="toc" v-html="toc"></div>
+      <p>tags:
+        <el-tag type="gray" v-for="tag in blog.tags" :key="tag" style="margin-left: 5px;">{{tag}}</el-tag>
+      </p>
+      <p>
+        <time>{{blog.createDateStr}}</time>
+      </p>
+      <article v-html="blog.html">
 
-    </article>
+      </article>
+    </div>
+
+    <div id="comments"></div>
+
   </div>
 
 </template>
 
 <script>
   import axios from 'axios'
+  import 'gitment/style/default.css'
+  import Gitment from 'gitment'
   import '../../assets/css/highlight-github.css'
-export default {
-  name: 'Blog',
-  data () {
-return {
-  blog: {}
-}
-  },
-  mounted () {
-    const self = this
-    const blogName = this.$route.path.replace('/blog/', '')
-    if (/^[\u4e00-\u9fa5\w-]+[^ /]$/.test(blogName)) {
-      axios.get('/getBlog/' + blogName)
-        .then(d => {
-          this.blog = d.data
+
+  export default {
+    name: 'Blog',
+    data () {
+      return {
+        blog: {},
+        toc: '',
+        gitment: null
+      }
+    },
+    mounted () {
+      const self = this
+      const blogName = this.$route.path.replace('/blog/', '')
+      if (/^[\u4e00-\u9fa5\w-]+[^ /]$/.test(blogName)) {
+        axios.get('/getBlog/' + blogName)
+          .then(d => {
+            d.data.html = d.data.html.replace(/<h1[\S\s]+<\/h1>/, '')
+            self.blog = d.data
+            self.toc = self.generateTOC(d.data.toc)
+          })
+          .catch(e => {
+            console.error(e)
+            // todo
+          })
+      }
+      self.renderComments()
+      self.gitment.render('comments')
+    },
+    methods: {
+      generateTOC: function (list) {
+        // todo 这个去掉，返回一个对象，然后外面在进行组装
+        // todo 然后把所有的this toc 去掉，没必要
+        let stArr = ['<p>文章目录</p>', '<ul>']
+        let l = 0
+        let levelN
+        list.forEach((v, i) => {
+          let anchor = '#' + v.text.toLowerCase().replace(/[^\u4e00-\u9fa5\w]+/g, '-')
+          if (l === 0 || l === v.level) {
+            l = v.level
+            stArr.push(`<li><a href="${anchor}">${v.text}</a></li>`)
+          } else if (v.level > l) {
+            l = v.level
+            // 如果后面的level比前面的高，只可能会高一级，正常情况下
+            // 先删除父级的结束标签，然后再塞入子级标签
+            stArr[stArr.length - 1] = stArr[stArr.length - 1].replace('</li>', '')
+            stArr.push(`<ul><li><a href="${anchor}">${v.text}</a></li>`)
+          } else if (levelN = l - v.level) {
+            // 如果后面一个子项比前面的低了，比如4级标题后面又跟了一个二级标题或者三级标题，先塞ol结束标记，再塞对应个数的li结束标记
+            l = v.level
+            stArr.push('</ul></li>')
+            stArr.push('</ul>'.repeat(levelN - 1))
+            stArr.push(`<li><a href="${anchor}">${v.text}</a></li>`)
+          }
+          if (i === list.length - 1) {
+            // 最后一个，塞结束标记
+            stArr.push('</ul>')
+          }
         })
-        .catch(e => {
-          console.error(e)
-          // todo
+
+        return stArr.join('')
+
+      },
+
+      renderComments () {
+        this.gitment = new Gitment({
+          owner: 'maicss',
+          repo: 'blog2',
+          oauth: {
+            client_id: 'f1754887d2730be17261',
+            client_secret: '0e1b702c2368238c576f4113a4a7a39466acef4f'
+          }
         })
-        }
-    console.log()
+      }
+    }
   }
-}
 </script>
 
 <style scoped>
-  article {
+  #container {
     width: 960px;
     margin: 0 auto;
   }
-  blockquote {
-    padding: 10px 15px;
-    border-left: solid 10px;
-    margin: 0 0 20px;
-    border-color: #D6DBDF;
-    background: none repeat scroll 0 0 rgba(102,128,153,.05);
+  #meta {
+    float: right;
+    text-align: right;
   }
 
-  blockquote p {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 25px;
+  #content {
+    overflow: hidden;
+    padding-bottom: 50px;
+  }
+
+  #toc {
+    float: right;
+    max-width: 280px;
+    border: 1px solid #999;
+    border-radius: 1px;
+    padding: 5px;
+    background-color: #f5f5f5;
+  }
+
+  h1 {
+    margin: 20px auto;
+  }
+
+  h1, h2, h3, h4 {
+    color: #444
   }
 </style>
