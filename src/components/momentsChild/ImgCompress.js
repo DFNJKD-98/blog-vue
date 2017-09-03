@@ -20,8 +20,8 @@ export default (imgFile, callback, maxWidthOrHeight, maxSize) => {
   img.src = URL.createObjectURL(imgFile)
   img.onload = function () {
     let radio = 1
-    if (Math.min(this.height, this.width) > 1000) {
-      radio = Math.max(this.height / 1000, this.width / 1000)
+    if (Math.min(this.height, this.width) > maxWidthOrHeight) {
+      radio = Math.max(this.height / maxWidthOrHeight, this.width / maxWidthOrHeight)
     }
     canvas.height = this.height / radio
     canvas.width = this.width / radio

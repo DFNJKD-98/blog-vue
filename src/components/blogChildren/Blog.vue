@@ -45,7 +45,7 @@
     },
     mounted () {
       const self = this
-      const blogName = this.$route.path.replace('/blog/', '')
+      const blogName = this.$route.params[0]
       if (/^[\u4e00-\u9fa5\w-]+[^ /]$/.test(blogName)) {
         axios.get('/getBlog/' + blogName)
           .then(d => {
@@ -63,8 +63,6 @@
     },
     methods: {
       generateTOC: function (list) {
-        // todo 这个去掉，返回一个对象，然后外面在进行组装
-        // todo 然后把所有的this toc 去掉，没必要
         let stArr = ['<p>文章目录</p>', '<ul>']
         let l = 0
         let levelN
@@ -132,6 +130,10 @@
     border-radius: 1px;
     padding: 5px;
     background-color: #f5f5f5;
+  }
+
+  #comments {
+    border-top: 1px solid #999;
   }
 
   h1 {
