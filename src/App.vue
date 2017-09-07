@@ -8,7 +8,7 @@
             <el-menu-item
               :key="item.path"
               v-for="item in $router.options.routes"
-              v-if="!item.private || isLogin"
+              v-if="(!item.private || isLogin) && !item.hide"
               :index="item.path"
               :route="{name: item.name}"
               :disabled="false"

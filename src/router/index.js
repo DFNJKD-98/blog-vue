@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import About from '@/components/About'
 import Index from '@/components/Index'
 import Moments from '@/components/Moments'
 import BlogIndex from '@/components/BlogIndex'
@@ -39,6 +39,7 @@ export default new Router({
       name: 'Blog Poster',
       // icon: 'el-icon-edit',
       private: true,
+      hide: true,
       component: Editor
     },
     {
@@ -51,7 +52,7 @@ export default new Router({
     {
       path: '/about',
       name: 'About',
-      component: Hello,
+      component: About,
     },
     {
       path: '/blog/*',
