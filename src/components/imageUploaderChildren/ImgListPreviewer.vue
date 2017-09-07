@@ -25,7 +25,6 @@
       <img width="100%" :src="previewFile.src">
       <div><el-input type="text" v-model="previewFile.name"></el-input></div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="previewDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="previewDialogVisible = false">确 定</el-button>
       </div>
     </el-dialog>
@@ -34,10 +33,8 @@
 </template>
 
 <script>
-  import ElInput from '../../../node_modules/element-ui/packages/input/src/input.vue'
   import {asyncCompressor} from '../momentsChild/ImgCompress'
   export default {
-    components: {ElInput},
     name: 'ImgListPreviewer',
     props: {
       fileList: {
@@ -47,6 +44,7 @@
         'default': []
       }
     },
+
     data () {
       return {
         dialogImageUrl: '',
@@ -54,6 +52,7 @@
         previewFile: {},
       }
     },
+
     methods: {
       readableSize (size) {
         return size / 1024 > 1024 ? (~~(10 * size / 1024 / 1024)) / 10 + 'MB' : ~~(size / 1024) + 'KB'
@@ -66,11 +65,17 @@
         this.fileList.splice(this.fileList.indexOf(file), 1)
       },
       copyUrl (url) {
-        // 创建一个以URL为内容的选区，然后再执行copy动作
+        const inp = document.createElement('input')
+        inp.value = url
+//        inp.hidden = true
+        document.body.appendChild(inp)
+        inp.focus()
+        inp.setSelectionRange(0, -1)
+        document.execCommand('copy')
+        document.body.removeChild(inp)
         console.log(url)
-        document.execCommand('copy', url)
       }
-    }
+    },
   }
 </script>
 

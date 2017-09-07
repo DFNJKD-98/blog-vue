@@ -46,16 +46,17 @@ export default new Router({
       name: 'Image Bed',
       // icon: 'el-icon-picture',
       private: true,
-      component: ImageUploader
+      component: ImageUploader,
     },
     {
       path: '/about',
       name: 'About',
-      component: Hello
+      component: Hello,
     },
     {
       path: '/blog/*',
       name: 'blog',
+      hide: true,
       component: Blog
     },
   ]
