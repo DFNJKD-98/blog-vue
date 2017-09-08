@@ -3,8 +3,12 @@
     <el-col :sm="24" :md="7" :lg="6">
       <Info></Info>
       <br>
-      <Conclusion :filter="yearFilter" @todayWeather="todayWeather" defaultFilter="all" :summary="summary"
-                  :errorText="summaryError"
+      <Conclusion
+        :filter="yearFilter"
+        @todayWeather="todayWeather"
+        defaultFilter="all"
+        :summary="summary"
+        :errorText="summaryError"
       ></Conclusion>
       <br>
     </el-col>
@@ -22,9 +26,8 @@
         <ListItem :key="item.date" v-for="item in momentsList" :isLogin="isLogin"
                   :item="item"></ListItem>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="summary.all > 20">
         <el-pagination
-          v-show="summary.all > 20"
           layout="prev, pager, next"
           :page-size="20"
           @current-change="loadMore"
@@ -50,7 +53,7 @@
       isLogin: {
         type: Boolean,
         required: true,
-        default: false
+        'default': false
       }
     },
     components: {

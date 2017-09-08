@@ -1,8 +1,7 @@
 <template>
 
-  <div id="wrapper">
-    <h2>Tags</h2>
-
+  <el-card :body-style="{ padding: '0px' }">
+    <div slot="header">Tags</div>
     <el-alert
       v-if="errorText"
       title="load summary failed."
@@ -10,14 +9,14 @@
       :closable="false"
       :description="errorText">
     </el-alert>
-    <div v-if="!errorText" :default-active=defaultFilter>
+    <div v-if="!errorText">
         <span class="tag gray" :class="defaultFilter === item.name ? 'isActive' : ''" @click="handleClick(item.name)" ref="tags" v-for="item in summaryData" :key="item.name">
           {{item.name}} - {{item.count}}
         </span>
 
     </div>
     <Weather></Weather>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -72,12 +71,6 @@
 <style scoped>
   h2 {
     text-align: center;
-  }
-
-  #wrapper {
-    border: 1px solid rgba(58, 58, 58, 0.33);
-    border-radius: 6px;
-    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15)
   }
 
   .tag {

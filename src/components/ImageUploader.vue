@@ -106,7 +106,7 @@
 
 <style scoped>
   #fileChoose {
-    padding: 15px 60px;
+    padding: 15px 48px;
     margin-right: 10px;
   }
 
@@ -121,6 +121,6 @@
   }
 
   #imageUploaderButton {
-    padding: 15px 60px;
+    padding: 15px 48px;
   }
 </style>

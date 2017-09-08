@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col :span="8" v-for="project in projects" :key="project.name">
+      <el-col :xm="24" :sm="24" :md="8" :lg="8" v-for="project in projects" :key="project.name">
         <el-card :body-style="{ padding: '10px', 'text-align': 'center'}">
           <div slot="header">
             <h3>{{project.name}}

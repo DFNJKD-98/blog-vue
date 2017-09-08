@@ -27,7 +27,7 @@
     <br>
 
     <el-row id="main-body">
-      <el-col :xm="24" :sm="24" :md="24" :lg="24">
+      <el-col>
         <router-view :isLogin="isLogin"></router-view>
       </el-col>
     </el-row>

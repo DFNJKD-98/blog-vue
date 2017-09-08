@@ -1,8 +1,8 @@
 <template>
-  <el-card :body-style="{ padding: '0' }">
-    <div id="headerImg" :height="headerHeight" :sm="24" :md="24" :lg="24"></div>
-    <div style="padding: 14px; text-align: center">
-      <p style="text-align: center;margin: 0;">Maicss</p>
+  <el-card :body-style="{ padding: '15px 0 0 0', 'text-align': 'center' }">
+    <img src="../assets/header.png">
+    <div style="padding: 14px;">
+      <p style="margin: 0;">Maicss</p>
       <div>
         <el-tag type="gray"><a href="https://github.com/maicss">Github</a></el-tag>
         <el-tag type="gray"><a href="mailto:maicss@foxmail.com?subject:From Blog Site">Email</a></el-tag>
@@ -12,33 +12,7 @@
   </el-card>
 </template>
 
-<script>
-  export default {
-    name: 'Info',
-    data () {
-      return {
-        headerHeight: '0px'
-      }
-    },
-    mounted: function () {
-      const headerImg = document.querySelector('#headerImg')
-      headerImg.style.height = getComputedStyle(headerImg).getPropertyValue('width')
-      window.addEventListener('resize', this.handleResize)
-    },
-    beforeDestroy: function () {
-      window.removeEventListener('resize', this.handleResize)
-    },
-    methods: {
-      handleResize () {
-        const headerImg = document.querySelector('#headerImg')
-        headerImg.style.height = getComputedStyle(headerImg).getPropertyValue('width')
-      }
-    },
-  }
-</script>
-
 <style scoped>
-
   a {
     text-decoration: none;
     color: #000
@@ -49,9 +23,10 @@
     text-decoration: none;
     color: #000;
   }
-
-  #headerImg {
-    background-image: url(../assets/header.png);
-    background-size: cover;
+  img{
+    max-width: 200px;
+    vertical-align: top;
+    border: none;
+    border-radius: 4px;
   }
 </style>

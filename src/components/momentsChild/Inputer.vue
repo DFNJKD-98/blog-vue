@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="container">
-      <div id="editor"v-text="momentsText" contenteditable placeholder="hiahiahia~~" @input="bindMoments"></div>
+      <textarea rows="3" v-model="momentsText" autocomplete="false" placeholder="hiahiahia~~"></textarea>
       <i class="el-icon-picture" id="img-selector" @click="selectFile()"></i>
       <el-button type="primary" id="submit" :disabled="disableBtn" @click="postMoments()">发表</el-button>
     </div>
@@ -108,9 +108,6 @@
           })
         }
       },
-      bindMoments (e) {
-        this.momentsText = e.target.innerHTML
-      }
     },
     computed: {
       disableBtn () {
@@ -137,53 +134,28 @@
 
   #container {
     overflow: hidden;
-    padding: 0 110px 0 0;
+    padding: 0 120px 0 0;
     position: relative;
   }
 
-  #editor {
-    vertical-align: middle;
+  textarea {
+    font-size: 20px;
+    font-weight:normal;
     border: 1px solid #ccc;
     border-radius: 4px;
-    max-width: 100%;
-    height: 60px;
-    font-size: 20px;
+    resize: none;
     outline: none;
-    padding: 5px;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    line-height: 1;
+    width: 100%;
   }
 
-  #editor:empty:before {
-    content: attr(placeholder);
-    display: block;
-    color: #999
+  textarea::-webkit-scrollbar {
+    width: 5px;
+    background-color: #dbdbdb;
   }
 
-  /*#editor:focus:before{*/
-  /*content: '';*/
-  /*}*/
-
-  #editor::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #F5F5F5;
-    border-radius: 10px;
-  }
-
-  #editor::-webkit-scrollbar {
-    width: 10px;
-    background-color: #F5F5F5;
-  }
-
-  #editor::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-image: -webkit-gradient(linear,
-    left bottom,
-    left top,
-    color-stop(0.44, rgb(122, 153, 217)),
-    color-stop(0.72, rgb(73, 125, 189)),
-    color-stop(0.86, rgb(28, 58, 148)));
+  textarea::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #797979;
   }
 
   #uploader {

@@ -9,7 +9,7 @@
     name: 'Index',
     data () {
       return {
-        msg: 'This is context of index'
+        msg: 'This is content of index'
       }
     }
   }

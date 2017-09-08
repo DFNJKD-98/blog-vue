@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row style="padding: 20px;" :gutter="10" class="picture-card">
-      <el-col class="item" :xs="8" :sm="8" :md="8" :lg="8" v-for="(file, index) in fileList" :key="index">
+      <el-col class="item" :xs="24" :sm="24" :md="8" :lg="8" v-for="(file, index) in fileList" :key="index">
         <div id="imgWrapper">
           <img :src="file.src">
           <div id="fileInfo">
