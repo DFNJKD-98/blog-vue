@@ -8,7 +8,7 @@
       ></Conclusion>
       <br>
     </el-col>
-    <el-col :sm="24" :md="17" :lg="18" style="border-left: 1px solid #999; padding-bottom: 20px;">
+    <el-col :sm="24" :md="17" :lg="18" id="momentsList">
       <InputFrame v-show="isLogin"></InputFrame>
       <hr v-show="isLogin">
       <el-alert
@@ -24,6 +24,7 @@
       </div>
       <div class="pagination">
         <el-pagination
+          v-show="summary.all > 20"
           layout="prev, pager, next"
           :page-size="20"
           @current-change="loadMore"
@@ -111,8 +112,19 @@
     padding: 10px 0;
     background-color: aliceblue;
   }
-</style>
-<style>
+
+  @media (max-width: 992px) {
+    #momentsList {
+      border-left: 1px solid transparent;
+      padding-bottom: 20px;
+    }
+  }
+  @media (min-width: 992px) {
+    #momentsList {
+      border-left: 1px solid #999;
+      padding-bottom: 20px;
+    }
+  }
   .el-card__body {
     padding: 0;
   }

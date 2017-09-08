@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="container" :xm="24" :sm="24" :md="24" :lg="24">
     <div id="meta">
       <div>
       <span>read: {{blog.readCount}}</span>
@@ -53,10 +53,7 @@
             self.blog = d.data
             self.toc = self.generateTOC(d.data.toc)
           })
-          .catch(e => {
-            console.error(e)
-            // todo
-          })
+          .catch(e => this.$message.error(e.message))
       }
       self.renderComments()
       self.gitment.render('comments')
@@ -110,7 +107,7 @@
 
 <style scoped>
   #container {
-    width: 960px;
+    max-width: 960px;
     margin: 0 auto;
   }
   #meta {

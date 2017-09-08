@@ -1,29 +1,26 @@
 <template>
 
-    <div id="wrapper">
-      <h2>Summary</h2>
+  <div id="wrapper">
+    <h2>Tags</h2>
 
-      <el-alert
-        v-if="errorText"
-        title="load summary failed."
-        type="error"
-        :closable="false"
-        :description="errorText">
-      </el-alert>
-      <el-menu v-if="!errorText" :default-active=defaultFilter class="el-menu-vertical-demo" style="border: solid #999; border-width: 1px 0; margin-bottom: 20px;">
-        <el-menu-item :key="item.year" :index="item.year" v-for="item in summaryData" @click="filter(item.year)">
-          {{item.year}}
-          <el-tag typeof="primary">{{item.count}}</el-tag>
-        </el-menu-item>
-      </el-menu>
+    <el-alert
+      v-if="errorText"
+      title="load summary failed."
+      type="error"
+      :closable="false"
+      :description="errorText">
+    </el-alert>
+    <div v-if="!errorText" :default-active=defaultFilter>
+        <span class="tag gray" :class="defaultFilter === item.name ? 'isActive' : ''" @click="handleClick(item.name)" ref="tags" v-for="item in summaryData" :key="item.name">
+          {{item.name}} - {{item.count}}
+        </span>
 
-      <Weather></Weather>
+    </div>
+    <Weather></Weather>
   </div>
 </template>
 
 <script>
-  // todo 变成标签
-  // todo year
   import axios from 'axios'
   import Weather from './Weather'
 
@@ -50,11 +47,26 @@
     computed: {
       summaryData: function () {
         return Object.keys(this.summary).sort().reverse().map(k => ({
-          year: k,
+          name: k,
           count: this.summary[k]
         }))
       }
-    }
+    },
+    methods: {
+      handleClick (tag) {
+        const allTags = this.$refs.tags
+        if (allTags.length) {
+          allTags.forEach(el => {
+            if (el.innerHTML.split('-')[0].trim() === tag) {
+              el.classList.add('isActive')
+            } else {
+              el.classList.remove('isActive')
+            }
+          })
+          this.filter(tag)
+        }
+      }
+    },
   }
 </script>
 <style scoped>
@@ -68,28 +80,31 @@
     box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15)
   }
 
-  .el-tag {
-    position: absolute;
-    right: 20px;
-    top: 6px;
-  }
-
-  .el-menu {
-    background-color: transparent;
-  }
-
-  .el-menu-item {
-    position: relative;
-    border-bottom: 1px solid #999;
-    line-height: 36px;
-  }
-
-  .el-menu-item:nth-last-of-type(1) {
-    border-bottom-color: transparent;
-  }
-
-  .is-active {
+  .tag {
+    background-color: #8391a5;
+    display: inline-block;
+    padding: 0 5px;
+    height: 24px;
+    line-height: 22px;
+    font-size: 12px;
     color: #fff;
-    background-color: #81ae9e;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .tag.gray {
+    background-color: #e4e8f1;
+    border-color: #e4e8f1;
+    color: #48576a;
+  }
+
+  .tag.gray.isActive {
+    background-color: #8391a5;
   }
 </style>

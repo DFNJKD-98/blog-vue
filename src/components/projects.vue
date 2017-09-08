@@ -55,7 +55,9 @@
             name: 'PyQt5-chinese-turour',
             desc: {
               short: 'PyQt5教程翻译',
-              details: []
+              details: [
+                '想做一个桌面端的APP，就看到了这个教程，最后发现还是HTML简单（逃'
+              ]
             },
             screenShot: '',
             address: {

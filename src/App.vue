@@ -26,9 +26,9 @@
     </div>
     <br>
 
-    <el-row>
-      <el-col>
-    <router-view :isLogin="isLogin"></router-view>
+    <el-row id="main-body">
+      <el-col :xm="24" :sm="24" :md="24" :lg="24">
+        <router-view :isLogin="isLogin"></router-view>
       </el-col>
     </el-row>
 
@@ -50,6 +50,10 @@
         <el-button type="primary" :disabled="hasUAndP" @click="login()">确 定</el-button>
       </div>
     </el-dialog>
+
+    <div id="footer">
+      &copy; maicss 2017 | Powered by: mongodb, nodejs, express, vue
+    </div>
 
   </div>
 </template>
@@ -78,6 +82,14 @@
     },
     mounted () {
       this.isLogin =  document.cookie.indexOf('login=bingo') > -1
+      const metaInfo = `
+<meta name="author" content="maicss">
+<meta name="description" content="maicss' blog">
+<meta name="keywords" content="maicss javascript 前端 博客">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+`
+      document.querySelector('head').insertAdjacentHTML('afterBegin', metaInfo)
     },
     methods: {
       login () {
@@ -123,11 +135,6 @@
 </script>
 
 <style>
-  .el-menu-item {
-    height: 36px;
-    line-height: 36px;
-  }
-
   #login {
     float: right;
   }
@@ -138,5 +145,15 @@
 
   #app {
     font-family: "PingFangSC-Light", "Helvetica Neue", Helvetica, "Microsoft YaHei", "微软雅黑", Arial, SimHei, serif;
+  }
+  #footer {
+    text-align: center;
+    background-color: #fff;
+    padding: 10px 0;
+    bottom: 0;
+    border-top: 1px solid rgb(154, 154, 154);
+  }
+  #main-body {
+    padding-bottom: 50px;
   }
 </style>
