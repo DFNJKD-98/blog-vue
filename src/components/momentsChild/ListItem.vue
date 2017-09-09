@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
-    <p id="content" @dblclick="editContent = true">
-      <span v-html="item.content"></span>
+    <p id="content" @dblclick="editContent = true" v-html="item.content">
+      <span></span>
     </p>
     <input v-show="editContent"
            v-focus="editContent"
@@ -9,7 +9,6 @@
            @keyup.enter="doneEdit"
            @keyup.esc="cancelEdit"
            @blur="doneEdit"
-
     >
     <el-row>
       <el-col :sm="8" :md="8" :lg="6" v-for="(image, index) in item.images" :key="index">
@@ -98,6 +97,7 @@
   #content {
     margin: 0;
     font-size: 20px;
+    overflow: hidden;
   }
 
   #info {
@@ -115,5 +115,12 @@
     box-shadow: none;
     padding: 5px;
     border-radius: inherit;
+  }
+</style>
+
+<style>
+
+  #content > p{
+    margin: 0;
   }
 </style>
