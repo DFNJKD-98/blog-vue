@@ -102,9 +102,6 @@
           .then(d => self.summary = d.data)
           .catch(e => self.summaryError = e.toString())
       })
-      bus.$on('DeleteMomentSuccess', function () {
-        this.$message.success('Delete moment success.');
-      })
     }
   }
 </script>
