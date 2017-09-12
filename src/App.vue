@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div id="header">
+    <div id="header" v-show="$route.path !=='/'">
 
-      <el-row :gutter="10">
+      <el-row>
         <el-col>
           <el-menu :default-active="$route.path" class="el-menu-demo" mode="horizontal" :router=true :xs="20" :sm="20" :md="20" :lg="20">
             <el-menu-item
@@ -23,8 +23,8 @@
         </el-col>
       </el-row>
 
+      <br>
     </div>
-    <br>
 
     <el-row id="main-body">
       <el-col>
@@ -51,7 +51,7 @@
       </div>
     </el-dialog>
 
-    <div id="footer">
+    <div id="footer" v-show="$route.path !=='/'">
       &copy; maicss 2017 | Powered by: mongodb, nodejs, express, vue
     </div>
 
@@ -135,6 +135,9 @@
 </script>
 
 <style>
+  #app {
+
+  }
   #login {
     float: right;
   }
@@ -154,6 +157,10 @@
     border-top: 1px solid rgb(154, 154, 154);
   }
   #main-body {
-    padding-bottom: 50px;
+    /*padding-bottom: 50px;*/
+    overflow: hidden;
+  }
+  body {
+    margin: 0;
   }
 </style>

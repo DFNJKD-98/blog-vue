@@ -53,7 +53,11 @@
             self.blog = d.data
             self.toc = self.generateTOC(d.data.toc)
           })
-          .catch(e => this.$message.error(e.message))
+          .catch(e => {
+            if (e.response.status === 404) {
+              this.$router.push('/404')
+            }
+          })
       }
       self.renderComments()
       self.gitment.render('comments')

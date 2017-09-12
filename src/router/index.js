@@ -8,6 +8,7 @@ import Blog from '@/components/blogChildren/Blog'
 import Projects from '@/components/Projects'
 import Editor from '@/components/Editor'
 import ImageUploader from '@/components/ImageUploader'
+import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
 
@@ -20,14 +21,14 @@ export default new Router({
       component: Index
     },
     {
+      path: '/blog',
+      name: 'Blog',
+      component: BlogIndex
+    },
+    {
       path: '/moments',
       name: 'Moments',
       component: Moments
-    },
-    {
-      path: '/BlogIndex',
-      name: 'Blog',
-      component: BlogIndex
     },
     {
       path: '/projects',
@@ -58,7 +59,26 @@ export default new Router({
       path: '/blog/*',
       name: 'blog',
       hide: true,
-      component: Blog
+      component: Blog,
+      beforeEnter(to, from, next) {
+        if (to.params[0]) {
+          next()
+        } else {
+          next('/404')
+        }
+      }
+    },
+    {
+      path: '/404',
+      name: 'NotFound',
+      hide: true,
+      component: NotFound,
+    },
+    {
+      path: '*',
+      name: 'NotFound',
+      hide: true,
+      component: NotFound,
     },
   ]
 })
