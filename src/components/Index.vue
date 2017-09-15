@@ -1,5 +1,5 @@
 <template>
-  <div id="body">
+  <div id="body" :style="{'background-image': 'url(' + bgi + ')'}">
     <div id="cover">
       <h1 id="title">Welcome To <i>Maicss' </i>Blog</h1>
 
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     props: {
       isLogin: {
@@ -33,6 +34,21 @@
         type: Boolean,
         'default': false
       }
+    },
+    data () {
+      return {
+        bgi: '',
+        host: process.env.APIUrlPrefix,
+      }
+    },
+    methods: {
+
+    },
+    mounted () {
+      axios.get('/indexImage').then(d => {
+        this.bgi = this.host + d.data
+        console.log(d.data)
+      }).catch(e => this.$message.error(e.message))
     }
   }
 </script>
