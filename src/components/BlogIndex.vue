@@ -41,7 +41,8 @@
       this.getBlogList().then(d => self.blogList = d)
       axios.get('/blogSummary')
         .then(d => {
-          self.summary = d.data.result[0].content
+          console.log(d.data)
+          self.summary = d.data.content
         })
         .catch(e => this.summaryError = e.message)
 
@@ -49,7 +50,7 @@
     methods: {
       getBlogList (page, tag) {
         return axios.get('/blogList', {params: {page, filter: tag}})
-          .then(d => d.data.result)
+          .then(d => d.data)
           .catch(e => this.$message.error(e.message))
       },
       loadMore (page) {

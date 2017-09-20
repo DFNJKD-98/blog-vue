@@ -1,5 +1,5 @@
 <template>
-  <div id="body" :style="{'background-image': 'url(' + bgi + ')'}">
+  <div id="body" :style="{'background-image': 'url(' + imageInfo.path + ')'}">
     <div id="cover">
       <h1 id="title">Welcome To <i>Maicss' </i>Blog</h1>
 
@@ -11,11 +11,12 @@
       </p>
 
       <div id="image-info">
-        <p>From: <a href="https://500px.com/photo/227073241/lonely-cloud-over-an-island-by-yann-grmln">500px.com</a></p>
-        <p>Auth: Yann Grmln</p>
+        <p>From: <a :href="imageInfo.url" class="img-link">500px.com</a></p>
+        <p>name: {{imageInfo.name}}</p>
+        <p>Auth: {{imageInfo.author}}</p>
         <p id="bgi-btn" v-if="isLogin">
-          <el-button type="warning" size="small">Dislike</el-button>
-          <el-button type="info" size="small">Like</el-button>
+          <el-button type="warning" size="small" @click="dislike(imageInfo.id)">Dislike</el-button>
+          <el-button type="info" size="small" @click="like(imageInfo.id)">Like</el-button>
         </p>
       </div>
       <footer id="copyright">
@@ -37,18 +38,31 @@
     },
     data () {
       return {
-        bgi: '',
+        imageInfo: {},
         host: process.env.APIUrlPrefix,
       }
     },
     methods: {
-
+      like (id) {
+        axios.put('/indexImage', {id}).then(() => {
+          this.getImage()
+        }).catch(e => this.$message.error(e.message))
+      },
+      dislike (id) {
+        axios.delete('/indexImage', {id}).then(() => {
+          this.getImage()
+        }).catch(e => this.$message.error(e.message))
+      },
+      getImage () {
+        axios.get('/indexImage').then(d => {
+          this.imageInfo = d.data
+          this.imageInfo.path = this.host + '/' + this.imageInfo.path
+          console.log(d.data)
+        }).catch(e => this.$message.error(e.message))
+      }
     },
     mounted () {
-      axios.get('/indexImage').then(d => {
-        this.bgi = this.host + d.data
-        console.log(d.data)
-      }).catch(e => this.$message.error(e.message))
+      this.getImage()
     }
   }
 </script>
@@ -91,7 +105,8 @@
     color: #b7b7b7;
   }
   #image-info{
-    background-color: #8e8e8e;
+    background-color: rgba(87, 87, 87, 0.37);
+    color: #929292;
     border-radius: 4px;
     position: fixed;
     left: 20px;
@@ -100,6 +115,10 @@
   }
   #image-info > p {
     margin: 0;
+  }
+  .img-link:visited, .img-link {
+    color: #929292;
+    text-decoration: none;
   }
   #copyright {
     padding: 10px 0;
@@ -112,16 +131,16 @@
   #bgi-btn{
     text-align: right;
     padding-top: 10px;
-    color: #eeeeee;
+    color: #929292;
   }
   .el-button--info{
-    color: #ddd;
-    background-color:#60abd7;
-    border-color: #6cb8e5;
+    color: #929292;
+    background-color: rgba(96, 171, 215, 0.53);
+    border-color: rgba(96, 171, 215, 0.53);
   }
   .el-button--warning {
-    background-color: #c49831;
-    color: #ddd;
-    border-color: #c49831;
+    background-color: rgba(165, 112, 41, 0.54);
+    color: #929292;
+    border-color: rgba(165, 112, 41, 0.54);
   }
 </style>

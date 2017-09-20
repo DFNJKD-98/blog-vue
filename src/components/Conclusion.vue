@@ -1,7 +1,15 @@
 <template>
 
   <el-card :body-style="{ padding: '0px' }">
-    <div slot="header">Tags</div>
+    <div style="padding: 5px">
+      Tags:
+      <span v-if="!errorText">
+        <span class="tag gray" :class="defaultFilter === item.name ? 'isActive' : ''" @click="handleClick(item.name)" ref="tags" v-for="item in summaryData" :key="item.name">
+          {{item.name}} - {{item.count}}
+        </span>
+    </span>
+    </div>
+
     <el-alert
       v-if="errorText"
       title="load summary failed."
@@ -9,12 +17,6 @@
       :closable="false"
       :description="errorText">
     </el-alert>
-    <div v-if="!errorText">
-        <span class="tag gray" :class="defaultFilter === item.name ? 'isActive' : ''" @click="handleClick(item.name)" ref="tags" v-for="item in summaryData" :key="item.name">
-          {{item.name}} - {{item.count}}
-        </span>
-
-    </div>
     <Weather></Weather>
   </el-card>
 </template>
@@ -45,7 +47,8 @@
     },
     computed: {
       summaryData: function () {
-        return Object.keys(this.summary).sort().reverse().map(k => ({
+        console.log(this.summary)
+        return Object.keys(this.summary).reverse().map(k => ({
           name: k,
           count: this.summary[k]
         }))

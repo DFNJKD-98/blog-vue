@@ -7,9 +7,13 @@
           <el-card :body-style="{ padding: '0px', border: 'none'}">
             <div>
               <div class="bottom clearfix">
-                <img width="30" :src="getIcons(item.code_day)"> ~
-                <img width="30" :src="getIcons(item.code_night)">
-                <span>{{item.low}} ~ {{ item.high }}</span>
+                <div>
+                  <img width="30" :src="getIcons(item.code_day)"> ~
+                  <img width="30" :src="getIcons(item.code_night)">
+                </div>
+                <div>
+                  <span>{{item.low}} ~ {{ item.high }}</span>
+                </div>
               </div>
             </div>
           </el-card>
