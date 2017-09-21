@@ -15,8 +15,8 @@
         <p>name: {{imageInfo.name}}</p>
         <p>Auth: {{imageInfo.author}}</p>
         <p id="bgi-btn" v-if="isLogin">
-          <el-button type="warning" size="small" @click="dislike(imageInfo.id)">Dislike</el-button>
-          <el-button type="info" size="small" @click="like(imageInfo.id)">Like</el-button>
+          <el-button v-if="!disableAllBtn" type="warning" size="small" @click="dislike(imageInfo.id + '.' + imageInfo.format)">Dislike</el-button>
+          <el-button v-if="imageInfo.type === 'temp'" type="info" size="small" @click="like(imageInfo.id + '.' + imageInfo.format)">Like</el-button>
         </p>
       </div>
       <footer id="copyright">
@@ -39,17 +39,19 @@
     data () {
       return {
         imageInfo: {},
+        disableAllBtn: false,
         host: process.env.APIUrlPrefix,
       }
     },
     methods: {
-      like (id) {
-        axios.put('/indexImage', {id}).then(() => {
-          this.getImage()
+      like (imageName) {
+        axios.put('/indexImage', {imageName}).then(() => {
+          this.$message.success('Liked success.')
+          this.disableAllBtn = true
         }).catch(e => this.$message.error(e.message))
       },
-      dislike (id) {
-        axios.delete('/indexImage', {id}).then(() => {
+      dislike (imageName) {
+        axios.delete('/indexImage', {params: {imageName}}).then(() => {
           this.getImage()
         }).catch(e => this.$message.error(e.message))
       },
@@ -57,7 +59,6 @@
         axios.get('/indexImage').then(d => {
           this.imageInfo = d.data
           this.imageInfo.path = this.host + '/' + this.imageInfo.path
-          console.log(d.data)
         }).catch(e => this.$message.error(e.message))
       }
     },

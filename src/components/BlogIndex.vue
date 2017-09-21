@@ -1,6 +1,8 @@
 <template>
   <el-row :gutter="10">
     <el-col :xs="24" :sm="24" :md="7" :lg="6" id="summaryList">
+      <Info></Info>
+      <br>
       <Conclusion :filter="tagFilter" defaultFilter="all" :summary="summary" :errorText="summaryError"></Conclusion>
     </el-col>
     <el-col :xs="24" :sm="24" :md="17" :lg="18" id="blogList">
@@ -19,15 +21,20 @@
 </template>
 
 <script>
+  // todo 不存在的blog没有返回404页面
+  // todo 路由的blog改成blogs
+  // todo Google analytics
   import axios from 'axios'
   import Blog from './blogChildren/Article'
   import Conclusion from './Conclusion'
+  import Info from './info'
 
   export default {
     name: 'BlogIndex',
     components: {
       Conclusion,
       Blog,
+      Info,
     },
     data () {
       return {
@@ -40,10 +47,7 @@
       const self = this
       this.getBlogList().then(d => self.blogList = d)
       axios.get('/blogSummary')
-        .then(d => {
-          console.log(d.data)
-          self.summary = d.data.content
-        })
+        .then(d => self.summary = d.data.content)
         .catch(e => this.summaryError = e.message)
 
     },

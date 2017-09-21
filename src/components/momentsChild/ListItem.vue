@@ -15,7 +15,7 @@
     <el-row>
       <el-col :sm="8" :md="8" :lg="6" v-for="(image, index) in item.images" :key="index">
         <el-card :body-style="{ padding: '0px' }">
-          <div class="image-card" :style="{'background-image': 'url(' + host + image + ')', height: '200px'}"></div>
+          <div class="image-card" :style="{'background-image': 'url(\'' + host + image + '\')', height: '200px'}"></div>
         </el-card>
       </el-col>
     </el-row>
@@ -102,14 +102,11 @@
           }
         }
       },
-      cancelEdit () {
-
-      },
       deleteMoments (date) {
         const self = this
         return axios.delete('./deleteMoments', {params: {date}})
           .then(d => {
-            if (d.data.result.value && d.data.result.value.date === date) {
+            if (d.data) {
               self.$message.success('Delete Moments success.')
             } else {
               return Promise.reject({message: 'delete moments error:, no matched Moments.'})
@@ -134,6 +131,7 @@
       }
     },
   }
+  // todo 这里的#content被404的样式影响了
 </script>
 
 <style scoped>

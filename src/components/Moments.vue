@@ -81,7 +81,7 @@
       getMoments (filter = 'all', limit = 20, page = 1) {
         axios.get('/getMomentsList', {params: {limit, filter, page}})
           .then(res => this.momentsList = res.data)
-          .catch(e => this.momentsError = e.toString())
+          .catch(e => this.momentsError = e.message)
       },
       loadMore (pageIndex) {
         this.getMoments(this.filter, 20, pageIndex)
@@ -92,15 +92,15 @@
       let self = this
       this.getMoments()
       axios.get('/getSummary')
-        .then(d => this.summary = d.data)
-        .catch(e => self.summaryError = e.toString())
+        .then(d => this.summary = d.data.content)
+        .catch(e => self.summaryError = e.message)
       bus.$on('reloadMoments', function () {
         self.getMoments()
       })
       bus.$on('reloadSummary', function () {
         axios.get('/getSummary')
           .then(d => self.summary = d.data)
-          .catch(e => self.summaryError = e.toString())
+          .catch(e => self.summaryError = e.message)
       })
     }
   }

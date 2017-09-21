@@ -47,7 +47,6 @@
     },
     computed: {
       summaryData: function () {
-        console.log(this.summary)
         return Object.keys(this.summary).reverse().map(k => ({
           name: k,
           count: this.summary[k]
@@ -72,9 +71,6 @@
   }
 </script>
 <style scoped>
-  h2 {
-    text-align: center;
-  }
 
   .tag {
     background-color: #8391a5;
