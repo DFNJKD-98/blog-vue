@@ -72,7 +72,6 @@
   #body {
     height: 100vh;
     width: 100vw;
-    background-image: url(../assets/About.jpg);
     background-size: cover;
     overflow: hidden;
     position: relative;
