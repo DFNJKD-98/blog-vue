@@ -42,7 +42,7 @@
 <script>
   import axios from 'axios'
   import InputFrame from './momentsChild/Inputer'
-  import Info from '@/components/info'
+  import Info from './info'
   import Conclusion from './Conclusion'
   import ListItem from './momentsChild/ListItem'
   import bus from './common/EventBus'
@@ -99,7 +99,7 @@
       })
       bus.$on('reloadSummary', function () {
         axios.get('/getSummary')
-          .then(d => self.summary = d.data)
+          .then(d => self.summary = d.data.content)
           .catch(e => self.summaryError = e.message)
       })
     }
