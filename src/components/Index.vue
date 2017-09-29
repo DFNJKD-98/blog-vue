@@ -113,13 +113,15 @@
     left: 20px;
     bottom: 70px;
     padding: 10px;
+    max-width: 450px;
+    right: 20px;
   }
   #image-info > p {
     margin: 0;
   }
   .img-link:visited, .img-link {
     color: #929292;
-    text-decoration: none;
+    text-decoration: underline;
   }
   #copyright {
     padding: 10px 0;

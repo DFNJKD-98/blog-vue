@@ -1,7 +1,7 @@
 <template>
   <el-row style="background-color:#344a5f;">
     <el-col>
-      <div id="content">
+      <div id="content1">
         <h1>404 Not Found</h1>
         <p>Sorry, the page you requested was Not Found </p>
       </div>
@@ -10,7 +10,7 @@
   </el-row>
 </template>
 <style>
-  #content {
+  #content1 {
     text-align: center;
     min-height: 400px;
     width: 400px;
