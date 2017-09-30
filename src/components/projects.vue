@@ -19,7 +19,7 @@
               </ul>
             </div>
             <div style="text-align: right">
-              <a :href="project.address.url">{{project.address.title}}</a>
+              <a :href="project.address.url" style="text-decoration: underline">{{project.address.title}}</a>
             </div>
           </div>
         </el-card>
@@ -100,9 +100,6 @@
 <style>
   .el-card__header {
     overflow: hidden;
-  }
-  a {
-    text-decoration: underline;
   }
   a:visited {
     color: unset;
