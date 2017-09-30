@@ -5,7 +5,7 @@
       <br>
       <Conclusion :filter="tagFilter" defaultFilter="all" :summary="summary" :errorText="summaryError"></Conclusion>
     </el-col>
-    <el-col :xs="24" :sm="24" :md="17" :lg="18" id="blogList">
+    <el-col :xs="24" :sm="24" :md="17" :lg="18" id="blogList" style="padding-left: 20px;">
       <Blog v-for="item in blogList" :key="item.createDate" :blog="item"></Blog>
       <div class="pagination">
         <el-pagination
@@ -38,7 +38,7 @@
     },
     data () {
       return {
-        summary: {},
+        summary: {all: 0},
         summaryError: '',
         blogList: [],
       }
@@ -67,9 +67,6 @@
   }
 </script>
 <style scoped>
-  h1, h2 {
-    font-weight: normal;
-  }
   @media (max-width: 992px) {
     #summaryList {
       margin-bottom: 20px;

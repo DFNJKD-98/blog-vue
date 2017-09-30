@@ -133,8 +133,7 @@
   }
 
   #container {
-    overflow: hidden;
-    padding: 0 120px 0 0;
+    padding: 0 120px 0 12px;
     position: relative;
   }
 

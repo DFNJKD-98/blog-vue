@@ -17,7 +17,7 @@
       :closable="false"
       :description="errorText">
     </el-alert>
-    <Weather></Weather>
+    <Weather id="weather"></Weather>
   </el-card>
 </template>
 
@@ -98,5 +98,10 @@
 
   .tag.gray.isActive {
     background-color: #8391a5;
+  }
+  @media (max-width: 992px) {
+    #weather {
+      display: none;
+    }
   }
 </style>

@@ -131,7 +131,6 @@
       }
     },
   }
-  // todo 这里的#content被404的样式影响了
 </script>
 
 <style scoped>

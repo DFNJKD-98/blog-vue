@@ -10,8 +10,8 @@
               </el-button>
             </h3>
           </div>
-          <img width="100%" src="https://localhost:9981/assert/PyQt5-tutorial-screenShot.png" class="image">
-          <div style="text-align: left; border-top: 1px solid #ddd">
+          <img v-show="project.screenShot" width="100%" :src="getScreenShot(project.screenShot)" class="image">
+          <div style="text-align: left;">
             <div>
               <h4>{{project.desc.short}}</h4>
               <ul>
@@ -36,7 +36,7 @@
         projects: [
           {
             name: 'chrome-shanbay-extension',
-            screenShot: './asserts/PyQt5-tutorial-screenShot.png',
+            screenShot: 'shanbay-screenshot.png',
             desc: {
               short: '扇贝查单词的chrome插件',
               details: [
@@ -56,10 +56,11 @@
             desc: {
               short: 'PyQt5教程翻译',
               details: [
-                '想做一个桌面端的APP，就看到了这个教程，最后发现还是HTML简单（逃'
+                '想做一个桌面端的APP，就看到了这个教程，发现挺适合入门，就一边看一遍翻译',
+                '最后发现还是HTML简单（逃'
               ]
             },
-            screenShot: '',
+            screenShot: 'PyQt5-tutorial-screenShot.png',
             address: {
               title: 'GitBook 地址',
               url: 'https://www.gitbook.com/book/maicss/pyqt5'
@@ -69,17 +70,23 @@
           {
             name: 'Blog',
             desc: {
-              short: '本Blog',
+              short: '就是这个Blog啦',
               details: [],
             },
             address: {
-              title: 'as',
+              title: '点击这里回到首页',
               url: '/'
             },
             screenShot: '',
             projectUrl: ''
           }
-        ]
+        ],
+        host: process.env.APIUrlPrefix,
+      }
+    },
+    methods: {
+      getScreenShot: function (name) {
+        if (name) return require('@/assets/' + name)
       }
     }
   }
@@ -95,7 +102,7 @@
     overflow: hidden;
   }
   a {
-    text-decoration: none;
+    text-decoration: underline;
   }
   a:visited {
     color: unset;
