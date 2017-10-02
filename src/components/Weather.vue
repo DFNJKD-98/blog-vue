@@ -44,7 +44,16 @@
     mounted () {
       axios.get('/getWeather').then(d => {
         this.WData = d.data
-        bus.$emit('todayWeather', {...d.data.results[0].daily[0], location: d.data.results[0].location.name})
+        const todayWeather = {
+          location: d.data.results[0].location.name,
+          'code_day': d.data.results[0].daily[0]['code_day'],
+          'code_night': d.data.results[0].daily[0]['code_night'],
+          'high': d.data.results[0].daily[0]['high'],
+          'low': d.data.results[0].daily[0]['low'],
+          'text_day': d.data.results[0].daily[0]['text_day'],
+          'text_night': d.data.results[0].daily[0]['text_night']
+        }
+        bus.$emit('todayWeather', todayWeather)
       }).catch(e => this.errorText = e.message)
     },
     methods: {
