@@ -65,7 +65,7 @@
         self.fullscreenLoading = true;
         const formData = new FormData()
         self.fileList.forEach(file => {
-          formData.append('picture', file.file, file.name)
+          formData.append('photos', file.file, file.name)
         })
         axios({
           url: '/blogImageUpload',
@@ -86,9 +86,7 @@
           })
           self.fileList = newFileList
           self.fullscreenLoading = false
-          console.log('upload file Done')
         }).catch(e => {
-          console.log(e)
           this.$message.error('error')
         })
       }

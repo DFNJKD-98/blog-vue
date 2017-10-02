@@ -74,9 +74,16 @@
           weather: self.todayWeather,
         }
         let form = new FormData()
-        form.append('obj', JSON.stringify(moments))
+        form.append('moments', JSON.stringify(moments))
         if (!this.fileList.length) {
-          axios.post('./postMoments', form)
+          axios({
+              url: '/moments',
+              method: 'POST',
+              headers: {
+                source: 'blog'
+              },
+              data: form
+            })
             .then(() => {
               self.$message.success('Post Moments Succeed')
               self.momentsText = ''
@@ -90,9 +97,9 @@
         } else {
           this.fileList.forEach(function (file, i) {
             ImgCompress(file.raw, function (b) {
-              form.append('photo', b, file.name)
+              form.append('photos', b, file.name)
               if (i === self.fileList.length - 1 ) {
-                axios.post('./postMoments', form)
+                axios.post('./moments', form)
                   .then(() => {
                     self.$message.success('Post Moments Succeed')
                     self.momentsText = ''

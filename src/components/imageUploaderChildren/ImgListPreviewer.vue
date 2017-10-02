@@ -38,7 +38,6 @@
     name: 'ImgListPreviewer',
     props: {
       fileList: {
-
         type: Array,
         require: true,
         'default': []
@@ -73,7 +72,6 @@
         inp.setSelectionRange(0, -1)
         document.execCommand('copy')
         document.body.removeChild(inp)
-        console.log(url)
       }
     },
   }

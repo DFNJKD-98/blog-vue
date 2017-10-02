@@ -79,7 +79,7 @@
         console.log(data)
       },
       getMoments (filter = 'all', limit = 20, page = 1) {
-        axios.get('/getMomentsList', {params: {limit, filter, page}})
+        axios.get('/moments', {params: {limit, filter, page}})
           .then(res => this.momentsList = res.data)
           .catch(e => this.momentsError = e.message)
       },
@@ -91,14 +91,14 @@
     mounted () {
       let self = this
       this.getMoments()
-      axios.get('/getSummary')
+      axios.get('/moments/summary')
         .then(d => this.summary = d.data.content)
         .catch(e => self.summaryError = e.message)
       bus.$on('reloadMoments', function () {
         self.getMoments()
       })
       bus.$on('reloadSummary', function () {
-        axios.get('/getSummary')
+        axios.get('/moments/summary')
           .then(d => self.summary = d.data.content)
           .catch(e => self.summaryError = e.message)
       })

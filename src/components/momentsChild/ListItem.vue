@@ -60,7 +60,7 @@
         const self = this
         if (e.target.value) {
           if (e.target.value !== self.item.content) {
-            axios.put('/updateMoments', {date: self.item.date, content: e.target.value}).then(d => {
+            axios.put('/moments', {date: self.item.date, content: e.target.value}).then(d => {
               if (d.data.date === self.item.date) {
                 self.editContent = false
                 bus.$emit('reloadMoments')
@@ -104,7 +104,7 @@
       },
       deleteMoments (date) {
         const self = this
-        return axios.delete('./deleteMoments', {params: {date}})
+        return axios.delete('./moments', {params: {date}})
           .then(d => {
             if (d.data) {
               self.$message.success('Delete Moments success.')

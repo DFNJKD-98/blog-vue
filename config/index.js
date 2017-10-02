@@ -5,7 +5,7 @@ const proxyTable = {
   all: {
     filter: [
       '/login', '/logout',
-      '/getMomentsList', '/getSummary', '/getWeather', '/postMoments', '/deleteMoments', '/updateMoments',
+      '/moments', '/moments/summary', '/getWeather',
       '/blogImageUpload', '/blogList', '/blogSummary', '/getBlog', '/getBlogImageInfo',
       '/indexImage',
     ],
