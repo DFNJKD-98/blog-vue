@@ -79,7 +79,7 @@
         console.log(data)
       },
       getMoments (filter = 'all', limit = 20, page = 1) {
-        axios.get('/moments', {params: {limit, filter, page}})
+        axios.get('/moments/list', {params: {limit, filter, page}})
           .then(res => this.momentsList = res.data)
           .catch(e => this.momentsError = e.message)
       },

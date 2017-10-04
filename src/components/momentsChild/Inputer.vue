@@ -80,7 +80,7 @@
               url: '/moments',
               method: 'POST',
               headers: {
-                source: 'blog'
+                source: 'moments'
               },
               data: form
             })
@@ -99,7 +99,14 @@
             ImgCompress(file.raw, function (b) {
               form.append('photos', b, file.name)
               if (i === self.fileList.length - 1 ) {
-                axios.post('./moments', form)
+                axios({
+                  url: '/moments',
+                  method: 'POST',
+                  headers: {
+                    source: 'moments'
+                  },
+                  data: form
+                })
                   .then(() => {
                     self.$message.success('Post Moments Succeed')
                     self.momentsText = ''

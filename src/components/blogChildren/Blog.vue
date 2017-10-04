@@ -15,7 +15,7 @@
         <el-tag type="gray" v-for="tag in blog.tags" :key="tag" style="margin-left: 5px;">{{tag}}</el-tag>
       </p>
       <p>
-        <time>{{blog.createDateStr}}</time>
+        <time>{{blog.date}}</time>
       </p>
       <article v-html="blog.html">
 
@@ -47,7 +47,7 @@
       const self = this
       const blogName = this.$route.params[0]
       if (/^[\u4e00-\u9fa5\w-]+[^ /]$/.test(blogName)) {
-        axios.get('/getBlog/' + blogName)
+        axios.get('/blog/archive/' + blogName)
           .then(d => {
             d.data.html = d.data.html.replace(/<h1[\S\s]+<\/h1>/, '')
             self.blog = d.data

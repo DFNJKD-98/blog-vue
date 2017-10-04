@@ -42,7 +42,7 @@
       }
     },
     mounted () {
-      axios.get('/getWeather').then(d => {
+      axios.get('/weather').then(d => {
         this.WData = d.data
         const todayWeather = {
           location: d.data.results[0].location.name,

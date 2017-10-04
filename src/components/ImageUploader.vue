@@ -33,7 +33,7 @@
       }
     },
     mounted () {
-      axios.get('./getBlogImageInfo')
+      axios.get('./blog/imageInfo')
         .then(d => this.databaseImagesInfo = d.data)
         .catch(e => this.$message.error(e.response.data.message))
       window.addEventListener('beforeunload', this.handleCloseWindow)
@@ -68,7 +68,7 @@
           formData.append('photos', file.file, file.name)
         })
         axios({
-          url: '/blogImageUpload',
+          url: '/blog/imageUpload',
           method: 'POST',
           headers: {
             source: 'blog'
@@ -87,7 +87,7 @@
           self.fileList = newFileList
           self.fullscreenLoading = false
         }).catch(e => {
-          this.$message.error('error')
+          this.$message.error(e.message)
         })
       }
     },

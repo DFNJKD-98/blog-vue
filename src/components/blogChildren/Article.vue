@@ -23,11 +23,6 @@
         type: Object,
         require: true,
       }
-    },
-    data () {
-      return {
-
-      }
     }
   }
 </script>
@@ -35,7 +30,6 @@
 <style>
   article {
     border-bottom: 1px solid #ddd;
-    border-top: 1px solid #fff;
     padding-top: 5px;
     padding-bottom: 30px;
     position: relative;

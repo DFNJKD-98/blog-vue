@@ -61,6 +61,8 @@
 <script>
   import axios from 'axios'
 
+  // todo blog的svg图标 location/calender/tags
+
   axios.defaults.withCredentials = true
 
   export default {

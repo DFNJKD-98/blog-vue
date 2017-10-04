@@ -46,14 +46,14 @@
     mounted () {
       const self = this
       this.getBlogList().then(d => self.blogList = d)
-      axios.get('/blogSummary')
+      axios.get('/blog/summary')
         .then(d => self.summary = d.data.content)
         .catch(e => this.summaryError = e.message)
 
     },
     methods: {
       getBlogList (page, tag) {
-        return axios.get('/blogList', {params: {page, filter: tag}})
+        return axios.get('/blog/list', {params: {page: page || 1, limit: 10, filter: tag}})
           .then(d => d.data)
           .catch(e => this.$message.error(e.message))
       },

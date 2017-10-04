@@ -25,7 +25,7 @@
       <el-tag type="gray"><i class="el-icon-date"></i> {{item.dateStr.slice(5, -3)}}</el-tag>
       <img :src="getIcons(item.weather.code ? item.weather.code[0] : item.weather.code_day ? item.weather.code_day : '0')" width="24"/>
       <el-tag type="gray" v-show="!item.isPublic">Private</el-tag>
-      <el-button :plain="true" type="warning" v-show="isLogin" size="small" @click="deleteMoments(item.date)" style="float: right;">
+      <el-button :plain="true" type="warning" v-show="isLogin&&!editContent" size="small" @click="deleteMoments(item.date)" style="float: right;">
         Delete
       </el-button>
     </p>
