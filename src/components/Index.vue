@@ -15,8 +15,8 @@
         <p>name: {{imageInfo.name}}</p>
         <p>Auth: {{imageInfo.author}}</p>
         <p id="bgi-btn" v-if="isLogin">
-          <el-button v-if="!disableAllBtn" type="warning" size="small" @click="dislike(imageInfo.id + '.' + imageInfo.format)">Dislike</el-button>
-          <el-button v-if="imageInfo.type === 'temp'" type="info" size="small" @click="like(imageInfo.id + '.' + imageInfo.format)">Like</el-button>
+          <el-button type="warning" size="small" @click="dislike(imageInfo.id + '.' + imageInfo.format)">Dislike</el-button>
+          <el-button v-if="imageInfo.type === 'temp' && !liked" type="info" size="small" @click="like(imageInfo.id + '.' + imageInfo.format)">Like</el-button>
         </p>
       </div>
       <footer id="copyright">
@@ -39,7 +39,7 @@
     data () {
       return {
         imageInfo: {},
-        disableAllBtn: false,
+        liked: false,
         host: process.env.APIUrlPrefix,
       }
     },
@@ -47,7 +47,7 @@
       like (imageName) {
         axios.put('/indexImage', {imageName}).then(() => {
           this.$message.success('Liked success.')
-          this.disableAllBtn = true
+          this.liked = true
         }).catch(e => this.$message.error(e.message))
       },
       dislike (imageName) {

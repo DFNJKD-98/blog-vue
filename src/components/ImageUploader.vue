@@ -3,7 +3,7 @@
     <div style="text-align: center">
       <el-button type="info" size="large" id="fileChoose" @click="handleFileChooserClick">Choose File</el-button>
       <input type="file" multiple accept="image/*" hidden id="fileInput" @change="handleFileInputChange" ref="fileInput">
-      <el-button type="primary" :disabled="!fileList.length" size="large" @click="uploadFiles" id="imageUploaderButton" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="正在上传图片">Upload</el-button>
+      <el-button type="primary" :disabled="!fileList.length || uploaded" size="large" @click="uploadFiles" id="imageUploaderButton" v-loading.fullscreen.lock="fullScreenLoading" element-loading-text="正在上传图片">Upload</el-button>
     </div>
     <div id="info" v-if="Object.keys(databaseImagesInfo).length">
       <div><strong>Images count: </strong> <span>{{databaseImagesInfo.count}}</span></div>
@@ -29,7 +29,9 @@
       return {
         fileList: [],
         databaseImagesInfo: {},
-        fullscreenLoading: false,
+        fullScreenLoading: false,
+        host: process.env.APIUrlPrefix,
+        uploaded: false
       }
     },
     mounted () {
@@ -44,8 +46,12 @@
     methods: {
       handleCloseWindow (e) {
         const msg = '确认离开？'
-        e.returnValue = msg
-        return msg
+        if (this.fileList.length){
+          e.returnValue = msg
+          return msg
+        } else {
+          return ''
+        }
       },
       handleFileChooserClick () {
         this.$refs.fileInput.click()
@@ -62,7 +68,7 @@
       uploadFiles() {
         // 给一个全屏的load
         const self = this
-        self.fullscreenLoading = true;
+        self.fullScreenLoading = true;
         const formData = new FormData()
         self.fileList.forEach(file => {
           formData.append('photos', file.file, file.name)
@@ -79,13 +85,14 @@
           d.data.forEach(file => {
             self.fileList.forEach(_file => {
               if (file.originName === _file.name) {
-                _file.path = 'http://localhost:8080/' + file.path
+                _file.path = self.host + file.path
                 newFileList.push(_file)
               }
             })
           })
           self.fileList = newFileList
-          self.fullscreenLoading = false
+          self.fullScreenLoading = false
+          self.uploaded = true
         }).catch(e => {
           this.$message.error(e.message)
         })
