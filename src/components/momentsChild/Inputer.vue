@@ -92,7 +92,7 @@
               bus.$emit('reloadSummary')
             })
             .catch(e => {
-              self.$message.error(e.response.data.message)
+              self.$message.error(e.response.data.error)
             })
         } else {
           this.fileList.forEach(function (file, i) {

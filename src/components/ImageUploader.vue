@@ -37,7 +37,7 @@
     mounted () {
       axios.get('./blog/imageInfo')
         .then(d => this.databaseImagesInfo = d.data)
-        .catch(e => this.$message.error(e.response.data.message))
+        .catch(e => this.$message.error(e.response.data.error))
       window.addEventListener('beforeunload', this.handleCloseWindow)
     },
     beforeDestroy () {
