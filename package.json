@@ -7,16 +7,16 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "analyz": "NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "element-ui": "^1.4.2",
     "gitment": "0.0.3",
-    "maic-marked": "^0.3.19",
+    "maic-marked": "*",
     "vue": "^2.3.3",
-    "vue-router": "^2.6.0",
-    "vuex": "^2.3.1"
+    "vue-router": "^2.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
