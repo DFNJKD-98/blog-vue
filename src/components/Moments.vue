@@ -42,7 +42,7 @@
 <script>
   import axios from 'axios'
   import InputFrame from './momentsChild/Inputer'
-  import Info from './info'
+  import Info from './Info'
   import Conclusion from './Conclusion'
   import ListItem from './momentsChild/ListItem'
   import bus from './common/EventBus'

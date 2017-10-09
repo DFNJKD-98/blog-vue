@@ -21,13 +21,10 @@
 </template>
 
 <script>
-  // todo 不存在的blog没有返回404页面
-  // todo 路由的blog改成blogs
-  // todo Google analytics
   import axios from 'axios'
   import Blog from './blogChildren/Article'
   import Conclusion from './Conclusion'
-  import Info from './info'
+  import Info from './Info'
 
   export default {
     name: 'BlogIndex',
