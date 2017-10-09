@@ -23,7 +23,7 @@
     <p id="info">
       <el-tag type="gray"><i class=""></i>{{item.weather.location}}</el-tag>
       <el-tag type="gray"><i class="el-icon-date"></i> {{item.dateStr.slice(5, -3)}}</el-tag>
-      <img :src="getIcons(item.weather.code ? item.weather.code[0] : item.weather.code_day ? item.weather.code_day : '0')" width="24"/>
+      <img :src="host + '/img/assets/weatherIcons/' + item.weather.code_day + '.png'" width="24"/>
       <el-tag type="gray" v-show="!item.isPublic">Private</el-tag>
       <el-button :plain="true" type="warning" v-show="isLogin&&!editContent" size="small" @click="deleteMoments(item.date)" style="float: right;">
         Delete
@@ -117,9 +117,6 @@
           })
           .catch(e => this.$message.error(e.message))
       },
-      getIcons: function (name) {
-        return require('../../assets/weatherIcons/' + name + '.png')
-      }
     },
     directives: {
       focus (el, {value}, {context}) {

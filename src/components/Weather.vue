@@ -8,8 +8,8 @@
             <div>
               <div class="bottom clearfix">
                 <div>
-                  <img width="30" :src="getIcons(item.code_day)"> ~
-                  <img width="30" :src="getIcons(item.code_night)">
+                  <img width="30" :src="host + '/img/assets/weatherIcons/' + item.code_day + '.png'"> ~
+                  <img width="30" :src="host + '/img/assets/weatherIcons/' + item.code_night + '.png'">
                 </div>
                 <div>
                   <span>{{item.low}} ~ {{ item.high }}</span>
@@ -38,7 +38,8 @@
     data () {
       return {
         WData: {'results': [{'location': {}, 'daily': [],}]},
-        errorText: ''
+        errorText: '',
+        host: process.env.APIUrlPrefix
       }
     },
     mounted () {
@@ -56,11 +57,6 @@
         bus.$emit('todayWeather', todayWeather)
       }).catch(e => this.errorText = e.message)
     },
-    methods: {
-      getIcons: function (name) {
-        return require('../assets/weatherIcons/' + name + '.png')
-      }
-    }
   }
 </script>
 

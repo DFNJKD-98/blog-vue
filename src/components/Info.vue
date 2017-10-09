@@ -1,6 +1,6 @@
 <template>
   <el-card :body-style="{ padding: '15px 0 0 0', 'text-align': 'center' }">
-    <img src="../assets/header.png">
+    <img :src="host + '/img/assets/header.png'">
     <div style="padding: 14px;">
       <p style="margin: 0;">Maicss</p>
       <div>
@@ -11,7 +11,15 @@
 
   </el-card>
 </template>
-
+<script>
+  export default {
+    data () {
+      return {
+        host: process.env.APIUrlPrefix
+      }
+    }
+  }
+</script>
 <style scoped>
   a {
     text-decoration: none;

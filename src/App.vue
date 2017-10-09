@@ -34,13 +34,13 @@
 
     <el-dialog title="Login" :visible.sync="showLoginFrame">
       <el-form :model="form">
-        <el-form-item label="Username" :label-width="formLabelWidth" required>
+        <el-form-item label="Username" required>
           <el-input v-model="form.username" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="Password" :label-width="formLabelWidth" required>
+        <el-form-item label="Password"  required>
           <el-input v-model="form.password" type="password" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="RememberMe" :label-width="formLabelWidth" prop="rememberMe">
+        <el-form-item label="RememberMe"  prop="rememberMe">
           <el-checkbox label="" v-model="form.rememberMe" name="rememberMe"></el-checkbox>
         </el-form-item>
       </el-form>
@@ -78,8 +78,7 @@
           username: 'test',
           password: 'test',
           rememberMe: true
-        },
-        formLabelWidth: '120px'
+        }
       }
     },
     mounted () {

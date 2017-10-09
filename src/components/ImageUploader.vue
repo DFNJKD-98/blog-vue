@@ -94,6 +94,7 @@
           self.fullScreenLoading = false
           self.uploaded = true
         }).catch(e => {
+          self.fullScreenLoading = false
           this.$message.error(e.message)
         })
       }

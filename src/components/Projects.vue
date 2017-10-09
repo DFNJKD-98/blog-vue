@@ -10,7 +10,7 @@
               </el-button>
             </h3>
           </div>
-          <img v-show="project.screenShot" width="100%" :src="getScreenShot(project.screenShot)" class="image">
+          <img v-show="project.screenShot" width="100%" :src="host + '/img/assets/' + project.screenShot" class="image">
           <div style="text-align: left;">
             <div>
               <h4>{{project.desc.short}}</h4>
@@ -82,11 +82,6 @@
           }
         ],
         host: process.env.APIUrlPrefix,
-      }
-    },
-    methods: {
-      getScreenShot: function (name) {
-        if (name) return require('@/assets/' + name)
       }
     }
   }
