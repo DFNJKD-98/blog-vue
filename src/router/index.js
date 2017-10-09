@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import About from '@/components/About'
-import Index from '@/components/Index'
-import Moments from '@/components/Moments'
-import BlogIndex from '@/components/BlogIndex'
-import Blog from '@/components/blogChildren/Blog'
-import Projects from '@/components/Projects'
-import ImageUploader from '@/components/ImageUploader'
-import NotFound from '@/components/NotFound'
+import About from '../components/About'
+import Index from '../components/Index'
+import Moments from '../components/Moments'
+import BlogIndex from '../components/BlogIndex'
+import Blog from '../components/blogChildren/Blog'
+import Projects from '../components/Projects'
+import ImageUploader from '../components/ImageUploader'
+import NotFound from '../components/NotFound'
 
 Vue.use(Router)
 
