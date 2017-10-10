@@ -17,9 +17,9 @@
       <p>
         <time>{{blog.date}}</time>
       </p>
-      <article v-html="blog.html">
+      <span v-html="blog.html">
 
-      </article>
+      </span>
     </div>
 
     <div id="comments"></div>
@@ -53,11 +53,7 @@
             self.blog = d.data
             self.toc = self.generateTOC(d.data.toc)
           })
-          .catch(e => {
-            if (e.response.status === 404) {
-              this.$router.push('/404')
-            }
-          })
+          .catch(e => this.$router.push('/404'))
       }
       self.renderComments()
       self.gitment.render('comments')

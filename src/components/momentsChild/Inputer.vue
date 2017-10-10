@@ -131,7 +131,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   #img-selector {
     position: absolute;
     top: 9px;
