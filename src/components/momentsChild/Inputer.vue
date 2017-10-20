@@ -199,6 +199,9 @@
     color: red;
   }
 
+</style>
+
+<style>
   #uploader .el-upload--picture-card {
     display: none;
   }
