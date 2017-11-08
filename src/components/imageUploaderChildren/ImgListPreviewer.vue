@@ -65,7 +65,7 @@
       },
       copyUrl (url) {
         const inp = document.createElement('input')
-        inp.value = url
+        inp.value = location.protocol + '//' + location.host + url
 //        inp.hidden = true
         document.body.appendChild(inp)
         inp.focus()

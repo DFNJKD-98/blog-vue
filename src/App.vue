@@ -25,7 +25,6 @@
 
       <br>
     </div>
-
     <el-row id="main-body">
       <el-col>
         <router-view :isLogin="isLogin"></router-view>
@@ -52,7 +51,7 @@
     </el-dialog>
 
     <div id="footer" v-show="$route.path !=='/'">
-      &copy; maicss 2017 | Powered by: mongodb, nodejs, express, vue
+      &copy; maicss 2017 | Powered by: mongodb, nodejs, koa, vue
     </div>
 
   </div>
