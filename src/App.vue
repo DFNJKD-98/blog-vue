@@ -46,11 +46,11 @@
       <el-alert v-show="logFailed" title="Invalid username or Password." :closable="false" type="error"></el-alert>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showLoginFrame = false">取 消</el-button>
-        <el-button type="primary" :disabled="hasUAndP" @click="login()">确 定</el-button>
+        <el-button type="primary" :disabled="hasUAndP" @keyup.enter="login()" @click="login()">确 定</el-button>
       </div>
     </el-dialog>
 
-    <div id="footer" v-show="$route.path !=='/'">
+    <div id="footer">
       &copy; maicss 2017 | Powered by: mongodb, nodejs, koa, vue
     </div>
 
