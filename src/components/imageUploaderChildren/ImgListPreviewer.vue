@@ -39,7 +39,7 @@
     props: {
       fileList: {
         type: Array,
-        require: true,
+        required: true,
         'default': []
       }
     },

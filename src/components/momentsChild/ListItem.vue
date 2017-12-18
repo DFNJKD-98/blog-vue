@@ -40,7 +40,7 @@
     name: 'ListItem',
     props: {
       item: {
-        require: false,
+        required: false,
         type: Object
       },
       isLogin: {

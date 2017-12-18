@@ -19,9 +19,9 @@
           <el-button v-if="imageInfo.type === 'temp' && !liked" type="info" size="small" @click="like(imageInfo.id + '.' + imageInfo.format)">Like</el-button>
         </p>
       </div>
-      <!--<footer id="copyright">-->
-      <!--&copy; maicss 2017 | Powered by: mongodb, nodejs, koa, vue-->
-      <!--</footer>-->
+      <footer id="copyright">
+        &copy; maicss 2017 | Powered by: mongodb, nodejs, koa, vue
+      </footer>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@
   export default {
     props: {
       isLogin: {
-        require: true,
+        required: true,
         type: Boolean,
         'default': false
       }

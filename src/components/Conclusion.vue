@@ -33,15 +33,15 @@
     props: {
       defaultFilter: {
         type: String,
-        require: true
+        required: true
       },
       filter: {
         type: Function,
-        require: true,
+        required: true
       },
       summary: {
         type: Object,
-        require: true,
+        required: true
       },
       errorText: String
     },
