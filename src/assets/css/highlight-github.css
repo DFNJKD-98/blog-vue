@@ -158,6 +158,10 @@
   outline-width: 0;
 }
 
+.markdown-body a:visited {
+  color: #0366d6
+}
+
 .markdown-body strong {
   font-weight: inherit;
 }
