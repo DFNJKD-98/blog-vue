@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div style="min-height: 900px">
     <el-row :gutter="10">
       <el-col :xm="24" :sm="24" :md="8" :lg="8" v-for="project in projects" :key="project.name">
-        <el-card :body-style="{ padding: '10px', 'text-align': 'center'}">
+        <el-card :body-style="{ padding: '10px', 'text-align': 'center', 'min-height': '200px'}">
           <div slot="header">
             <h3>{{project.name}}
               <el-button type="primary" style="float:right;">
-                <a :href="project.projectUrl">项目地址</a>
+                <a style="color: #fff; text-decoration: none" :href="project.projectUrl">项目地址</a>
               </el-button>
             </h3>
           </div>
-          <img v-show="project.screenShot" width="100%" :src="host + '/img/assets/' + project.screenShot" class="image">
+          <!--<img v-show="project.screenShot" width="100%" :src="host + '/img/assets/' + project.screenShot" class="image">-->
           <div style="text-align: left;">
             <div>
               <h4>{{project.desc.short}}</h4>
@@ -74,7 +74,7 @@
               details: [],
             },
             address: {
-              title: '点击这里回到首页',
+              title: '回到首页',
               url: '/'
             },
             screenShot: '',

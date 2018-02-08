@@ -10,7 +10,7 @@
     </div>
     <h1>{{blog.title}}</h1>
     <div id="content" class="markdown-body">
-      <div id="toc" v-html="toc"></div>
+      <div id="toc" v-show="toc" v-html="toc"></div>
       <p>tags:
         <el-tag type="gray" v-for="tag in blog.tags" :key="tag" style="margin-left: 5px;">{{tag}}</el-tag>
       </p>
@@ -60,6 +60,7 @@
     },
     methods: {
       generateTOC: function (list) {
+        if (!list.length) return ''
         let stArr = ['<p>文章目录</p>', '<ul>']
         let l = 0
         let levelN
