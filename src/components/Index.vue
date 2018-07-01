@@ -20,7 +20,7 @@
         </p>
       </div>
       <footer id="copyright">
-        &copy; maicss 2017 | Powered by: mongodb, nodejs, express, vue
+        &copy; maicss 2017 | Powered by: mongodb, nodejs, koa, vue
       </footer>
     </div>
   </div>
@@ -31,7 +31,7 @@
   export default {
     props: {
       isLogin: {
-        require: true,
+        required: true,
         type: Boolean,
         'default': false
       }

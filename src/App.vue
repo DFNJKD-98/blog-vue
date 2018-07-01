@@ -25,19 +25,18 @@
 
       <br>
     </div>
-
     <el-row id="main-body">
       <el-col>
         <router-view :isLogin="isLogin"></router-view>
       </el-col>
     </el-row>
 
-    <el-dialog title="Login" :visible.sync="showLoginFrame">
+    <el-dialog title="Login" :visible.sync="showLoginFrame" @keyup.enter.native="login">
       <el-form :model="form">
         <el-form-item label="Username" required>
           <el-input v-model="form.username" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="Password"  required>
+        <el-form-item label="Password" required>
           <el-input v-model="form.password" type="password" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="RememberMe"  prop="rememberMe">
@@ -47,12 +46,12 @@
       <el-alert v-show="logFailed" title="Invalid username or Password." :closable="false" type="error"></el-alert>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showLoginFrame = false">取 消</el-button>
-        <el-button type="primary" :disabled="hasUAndP" @click="login()">确 定</el-button>
+        <el-button type="primary" :disabled="hasUAndP" @click="login">确 定</el-button>
       </div>
     </el-dialog>
 
     <div id="footer" v-show="$route.path !=='/'">
-      &copy; maicss 2017 | Powered by: mongodb, nodejs, express, vue
+      &copy; maicss 2017 | Powered by: mongodb, nodejs, koa, vue
     </div>
 
   </div>
