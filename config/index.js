@@ -1,5 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+const devConfig = require('./dev.env')
 
 const proxyTable = {
   all: {
@@ -9,8 +10,8 @@ const proxyTable = {
       '/blog/imageUpload', '/blog/list', '/blog/summary', '/blog/archive/', '/blog/imageInfo',
       '/indexImage',
     ],
-    target: 'https://localhost:9981/',
-    secure: false
+    target: devConfig.APIUrlPrefix.replace(/"/g, ''),
+    changeOrigin: true,
   },
   // others: {
   //   filter: ['/blog/**'],

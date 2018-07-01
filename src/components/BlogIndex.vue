@@ -64,6 +64,9 @@
   }
 </script>
 <style scoped>
+  .pagination {
+    text-align: center;
+  }
   @media (max-width: 992px) {
     #summaryList {
       margin-bottom: 20px;
